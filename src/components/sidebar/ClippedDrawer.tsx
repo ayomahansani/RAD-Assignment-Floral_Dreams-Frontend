@@ -14,10 +14,8 @@ import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CarRentalIcon from '@mui/icons-material/CarRental';
 import GroupIcon from '@mui/icons-material/Group';
-import AgriculturalIcon from '@mui/icons-material/Agriculture';
+import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import FieldIcon from '@mui/icons-material/Landscape';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 import DashboardPage from '../../pages/Dashboard.tsx';
 import StaffPage from '../../pages/StaffPage.tsx';
@@ -35,7 +33,7 @@ export default function HoverableSidebar() {
         <Box sx={{
             display: 'flex',
             minHeight: '100vh',
-            backgroundImage: 'url(/f1.jpg)', // Set your background image path
+            backgroundImage: 'url(/background.jpg)', // Set your background image path
             backgroundSize: 'cover', // Ensure the image covers the entire background
             backgroundPosition: 'center', // Center the image
             backgroundRepeat: 'no-repeat', // Prevent repeating the image
@@ -71,7 +69,7 @@ export default function HoverableSidebar() {
                     <Typography
                         variant="h6"
                         sx={{
-                            color: 'black', // Custom color
+                            color: '#432e32', // Custom color
                             fontFamily: 'Fira Code, monospace',
                             fontSize: '26px', // Custom font size
                             fontWeight: 'bold', // Custom font weight
@@ -82,7 +80,7 @@ export default function HoverableSidebar() {
                     </Typography>
 
                     <img
-                        src="/sidebar-logo.png"
+                        src="/logo.png"
                         alt="Green Shadow Logo"
                         style={{width: '150px', height: 'auto', marginTop: '0', marginLeft: '40px'}} // Adjust size and spacing
                     />
@@ -90,12 +88,12 @@ export default function HoverableSidebar() {
                     <List>
                         {[
                             { text: 'Dashboard', icon: <DashboardIcon />, to: '/' },
-                            { text: 'Flowers', icon: <AgriculturalIcon />, to: '/flower' },
-                            { text: 'Staff', icon: <GroupIcon />, to: '/staff' },
-                            { text: 'Fields', icon: <FieldIcon />, to: '/field' },
-                            { text: 'Vehicles', icon: <CarRentalIcon />, to: '/vehicle' },
-                            { text: 'Equipments', icon: <SettingsIcon />, to: '/equipment' },
-                            { text: 'Logs', icon: <ReceiptLongIcon />, to: '/log' }
+                            { text: 'Flowers', icon: <LocalFloristIcon />, to: '/flower' },
+                            { text: 'Customers', icon: <GroupIcon />, to: '/customer' },
+                            { text: 'Place Order', icon: <FieldIcon />, to: '/placeOrder' },
+                            { text: 'Order Details', icon: <CarRentalIcon />, to: '/orderDetails' },
+                            { text: 'Payment', icon: <CarRentalIcon />, to: '/payment' },
+                            { text: 'Log Out', icon: <CarRentalIcon />, to: '/logout' },
                         ].map((item) => (
                             <Tooltip title={item.text} placement="right" key={item.text}>
                                 <ListItem
@@ -111,20 +109,21 @@ export default function HoverableSidebar() {
                                         to={item.to}
                                         sx={{
                                             '&:hover': {
-                                                backgroundColor: '#674b50',
+                                                backgroundColor: 'rgba(117,90,95,0.83)',
                                                 transition: '0.3s',
                                             },
                                             ...(location.pathname === item.to && {
-                                                backgroundColor: '#674b50',
+                                                backgroundColor: 'rgba(117,90,95,0.83)',
                                                 fontWeight: 'bold',
                                             }),
                                         }}
                                     >
-                                        <ListItemIcon sx={{ color: 'black' }}>{item.icon}</ListItemIcon>
+                                        <ListItemIcon sx={{ color: '#432e32' }}>{item.icon}</ListItemIcon>
                                         <ListItemText
                                             primary={item.text}
                                             sx={{
-                                                color: 'black',
+                                                color: '#432e32',
+                                                fontFamily: 'Fira Code, monospace',
                                                 fontSize: '25px', // Increase font size
                                                 fontWeight: 'bold', // Make text bold
                                             }}
@@ -140,7 +139,7 @@ export default function HoverableSidebar() {
             <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: '#bda6a6',opacity: 0.9, borderRadius: '16px', marginLeft: '20px' }}>
                 {/* Upper box for the page title */}
                 <Box sx={{ padding: '16px', backgroundColor: '#674b50', borderRadius: '8px', marginBottom: '20px' }}>
-                    <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold',fontFamily: 'Roboto, sans-serif', textAlign: 'right' }}>
+                    <Typography variant="h5" sx={{ color: '#ecd9d9', fontWeight: 'bold',fontFamily: 'Roboto, sans-serif', textAlign: 'right' }}>
                         {/* Dynamic page title based on the current route */}
                         {(() => {
                             switch (location.pathname) {
@@ -148,16 +147,16 @@ export default function HoverableSidebar() {
                                     return 'Dashboard';
                                 case '/flower':
                                     return 'Flower Management';
-                                case '/staff':
-                                    return 'Staff Management';
-                                case '/field':
-                                    return 'Field Management';
-                                case '/vehicle':
-                                    return 'Vehicle Management';
-                                case '/equipment':
-                                    return 'Equipment Management';
-                                case '/log':
-                                    return 'Logs Management';
+                                case '/customer':
+                                    return 'Customer Management';
+                                case '/placeOrder':
+                                    return 'Orders Management';
+                                case '/orderDetails':
+                                    return 'Order Details';
+                                case '/payment':
+                                    return 'Payments';
+                                case '/logout':
+                                    return 'Logout';
                                 default:
                                     return '';
                             }
