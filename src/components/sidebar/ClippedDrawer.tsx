@@ -20,11 +20,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 import DashboardPage from '../../pages/Dashboard.tsx';
-import CropsPage from '../../pages/Crops.tsx';
 import StaffPage from '../../pages/StaffPage.tsx';
 import VehiclePage from '../../pages/VehiclePage.tsx';
 import EquipmentsPage from '../../pages/Equipments.tsx';
 import FieldPage from "../../pages/FieldPage.tsx";
+import FlowerPage from "../../pages/FlowerPage.tsx";
 
 const drawerWidth = 230;
 
@@ -32,7 +32,15 @@ export default function HoverableSidebar() {
     const location = useLocation();
 
     return (
-        <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: '#347853', padding: '20px' }}>
+        <Box sx={{
+            display: 'flex',
+            minHeight: '100vh',
+            backgroundImage: 'url(/f1.jpg)', // Set your background image path
+            backgroundSize: 'cover', // Ensure the image covers the entire background
+            backgroundPosition: 'center', // Center the image
+            backgroundRepeat: 'no-repeat', // Prevent repeating the image
+            padding: '20px',
+        }}>
             <CssBaseline />
 
             <Drawer
@@ -43,8 +51,9 @@ export default function HoverableSidebar() {
                     [`& .MuiDrawer-paper`]: {
                         width: drawerWidth,
                         boxSizing: 'border-box',
-                        color: 'white',
-                        backgroundColor: '#71bc92',
+                        color: 'black',
+                        backgroundColor: '#bda6a6',
+                        opacity: 0.9,
                         boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
                         borderRadius: '16px',
                         height: 'calc(100vh - 40px)',
@@ -62,14 +71,14 @@ export default function HoverableSidebar() {
                     <Typography
                         variant="h6"
                         sx={{
-                            color: '#ffffff', // Custom color
-                            fontFamily: 'Arial, sans-serif', // Custom font family
+                            color: 'black', // Custom color
+                            fontFamily: 'Fira Code, monospace',
                             fontSize: '26px', // Custom font size
                             fontWeight: 'bold', // Custom font weight
                             marginBottom: '0',
                         }}
                     >
-                        Green Shadow
+                        Floral Dreams
                     </Typography>
 
                     <img
@@ -81,7 +90,7 @@ export default function HoverableSidebar() {
                     <List>
                         {[
                             { text: 'Dashboard', icon: <DashboardIcon />, to: '/' },
-                            { text: 'Crops', icon: <AgriculturalIcon />, to: '/crop' },
+                            { text: 'Flowers', icon: <AgriculturalIcon />, to: '/flower' },
                             { text: 'Staff', icon: <GroupIcon />, to: '/staff' },
                             { text: 'Fields', icon: <FieldIcon />, to: '/field' },
                             { text: 'Vehicles', icon: <CarRentalIcon />, to: '/vehicle' },
@@ -93,7 +102,7 @@ export default function HoverableSidebar() {
                                     disablePadding
                                     sx={{
                                         marginBottom: '5px', // Add vertical margin between list items
-                                        border: '2px solid #5ea080', // Add border
+                                        border: '2px solid #674b50', // Add border
                                         // borderRadius: '8px', // Round the corners
                                     }}
                                 >
@@ -102,21 +111,21 @@ export default function HoverableSidebar() {
                                         to={item.to}
                                         sx={{
                                             '&:hover': {
-                                                backgroundColor: '#5ea080',
+                                                backgroundColor: '#674b50',
                                                 transition: '0.3s',
                                             },
                                             ...(location.pathname === item.to && {
-                                                backgroundColor: '#5ea080',
+                                                backgroundColor: '#674b50',
                                                 fontWeight: 'bold',
                                             }),
                                         }}
                                     >
-                                        <ListItemIcon sx={{ color: 'white' }}>{item.icon}</ListItemIcon>
+                                        <ListItemIcon sx={{ color: 'black' }}>{item.icon}</ListItemIcon>
                                         <ListItemText
                                             primary={item.text}
                                             sx={{
-                                                color: 'white',
-                                                fontSize: '20px', // Increase font size
+                                                color: 'black',
+                                                fontSize: '25px', // Increase font size
                                                 fontWeight: 'bold', // Make text bold
                                             }}
                                         />
@@ -128,17 +137,17 @@ export default function HoverableSidebar() {
                 </Box>
             </Drawer>
 
-            <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: '#71bc92', borderRadius: '16px', marginLeft: '20px' }}>
+            <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: '#bda6a6',opacity: 0.9, borderRadius: '16px', marginLeft: '20px' }}>
                 {/* Upper box for the page title */}
-                <Box sx={{ padding: '16px', backgroundColor: '#5ea080', borderRadius: '8px', marginBottom: '20px' }}>
-                    <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold', textAlign: 'right' }}>
+                <Box sx={{ padding: '16px', backgroundColor: '#674b50', borderRadius: '8px', marginBottom: '20px' }}>
+                    <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold',fontFamily: 'Roboto, sans-serif', textAlign: 'right' }}>
                         {/* Dynamic page title based on the current route */}
                         {(() => {
                             switch (location.pathname) {
                                 case '/':
                                     return 'Dashboard';
-                                case '/crop':
-                                    return 'Crops Management';
+                                case '/flower':
+                                    return 'Flower Management';
                                 case '/staff':
                                     return 'Staff Management';
                                 case '/field':
@@ -157,10 +166,10 @@ export default function HoverableSidebar() {
                 </Box>
 
                 {/* Lower box for the page content */}
-                <Box sx={{ padding: '16px', backgroundColor: '#71bc92', borderRadius: '8px' }}>
+                <Box sx={{ padding: '16px', backgroundColor: '#674b50', borderRadius: '8px', height: '87%' }}>
                     <Routes>
                         <Route path="/" element={<DashboardPage />} />
-                        <Route path="/crop" element={<CropsPage />} />
+                        <Route path="/flower" element={<FlowerPage />} />
                         <Route path="/staff" element={<StaffPage />} />
                         <Route path="/vehicle" element={<VehiclePage />} />
                         <Route path="/equipment" element={<EquipmentsPage />} />

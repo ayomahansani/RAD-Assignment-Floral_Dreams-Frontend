@@ -10,7 +10,6 @@ interface RootState {
 }
 
 const FieldFormComponent = () => {
-
     const fields = useSelector((store: RootState) => store.field); // Updated useSelector with correct type
     const dispatch = useDispatch();
 
@@ -107,7 +106,7 @@ const FieldFormComponent = () => {
 
     return (
         <>
-            <form className="mx-1 mt-0 p-3 rounded-lg border-2 border-green-800 shadow-lg">
+            <form className="mx-1 mt-0 p-3 rounded-lg border-2 border-black shadow-lg bg-[#bda6a6]">
                 <div className="grid gap-6 mb-6 md:grid-cols-3">
                     <div>
                         <label htmlFor="field_code" className="block mb-2 text-sm font-bold text-gray-700">
@@ -200,14 +199,14 @@ const FieldFormComponent = () => {
                     <button
                         type="button"
                         onClick={() => handleFieldOperation(editMode ? "UPDATE_FIELD" : "ADD_FIELD")}
-                        className="w-full text-white bg-green-800 hover:bg-[#5ea080] border-2 border-green-800 font-bold rounded-lg text-sm px-5 py-2 text-center shadow-md"
+                        className="w-full text-white bg-black hover:bg-transparent hover:text-black hover:border-2 hover:border-black font-bold rounded-lg text-sm px-5 py-2 text-center shadow-md"
                     >
                         {editMode ? "Update Field" : "Add Field"}
                     </button>
                     <button
                         type="button"
                         onClick={() => clearForm()}
-                        className="w-full text-white bg-green-800 hover:bg-[#5ea080] border-2 border-green-800 font-bold rounded-lg text-sm px-5 py-2 text-center shadow-md"
+                        className="w-full text-white bg-black hover:bg-black border-2 border-green-800 font-bold rounded-lg text-sm px-5 py-2 text-center shadow-md"
                     >
                         Clear
                     </button>
