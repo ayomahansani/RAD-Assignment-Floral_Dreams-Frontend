@@ -3,7 +3,7 @@ const DashboardCardsComponent = () => {
         {
             title: "Flowers",
             count: 120,
-            image: "/flower1.jpg", // Replace with the actual image path
+            image: "/flower2.jpg", // Replace with the actual image path
         },
         {
             title: "Customers",
