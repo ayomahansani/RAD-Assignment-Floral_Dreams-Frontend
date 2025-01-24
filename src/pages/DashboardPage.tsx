@@ -1,6 +1,6 @@
 import {Container} from "@mui/material";
 
-function Dashboard() {
+function DashboardPage() {
     return (
         <>
             <Container></Container>
@@ -8,4 +8,4 @@ function Dashboard() {
     )
 }
 
-export default Dashboard;
+export default DashboardPage;

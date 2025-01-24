@@ -12,21 +12,35 @@ import Tooltip from '@mui/material/Tooltip';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import CarRentalIcon from '@mui/icons-material/CarRental';
 import GroupIcon from '@mui/icons-material/Group';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
-import FieldIcon from '@mui/icons-material/Landscape';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import PaymentIcon from '@mui/icons-material/Payment';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-import DashboardPage from '../../pages/Dashboard.tsx';
+import DashboardPage from '../../pages/DashboardPage.tsx';
 import StaffPage from '../../pages/StaffPage.tsx';
 import VehiclePage from '../../pages/VehiclePage.tsx';
 import EquipmentsPage from '../../pages/Equipments.tsx';
 import FieldPage from "../../pages/FieldPage.tsx";
 import FlowerPage from "../../pages/FlowerPage.tsx";
+import {useEffect, useState} from "react";
 
 const drawerWidth = 230;
 
 export default function HoverableSidebar() {
+
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer); // Clean up the timer on unmount
+    }, []);
+
     const location = useLocation();
 
     return (
@@ -87,13 +101,13 @@ export default function HoverableSidebar() {
 
                     <List>
                         {[
-                            { text: 'Dashboard', icon: <DashboardIcon />, to: '/' },
-                            { text: 'Flowers', icon: <LocalFloristIcon />, to: '/flower' },
-                            { text: 'Customers', icon: <GroupIcon />, to: '/customer' },
-                            { text: 'Place Order', icon: <FieldIcon />, to: '/placeOrder' },
-                            { text: 'Order Details', icon: <CarRentalIcon />, to: '/orderDetails' },
-                            { text: 'Payment', icon: <CarRentalIcon />, to: '/payment' },
-                            { text: 'Log Out', icon: <CarRentalIcon />, to: '/logout' },
+                            { text: 'Dashboard', icon: <DashboardIcon />, to: '/' }, // DashboardPage Icon
+                            { text: 'Flowers', icon: <LocalFloristIcon />, to: '/flower' }, // Flower Icon
+                            { text: 'Customers', icon: <GroupIcon />, to: '/customer' }, // Group Icon (Customer Management)
+                            { text: 'Place Order', icon: <ShoppingCartIcon />, to: '/placeOrder' }, // Shopping Cart Icon for Orders
+                            { text: 'Order Details', icon: <ReceiptLongIcon />, to: '/orderDetails' }, // Receipt Icon for Order Details
+                            { text: 'Payment', icon: <PaymentIcon />, to: '/payment' }, // Payment Icon for Transactions
+                            { text: 'Log Out', icon: <ExitToAppIcon />, to: '/logout' }, // Log Out Icon
                         ].map((item) => (
                             <Tooltip title={item.text} placement="right" key={item.text}>
                                 <ListItem
@@ -111,21 +125,35 @@ export default function HoverableSidebar() {
                                             '&:hover': {
                                                 backgroundColor: 'rgba(117,90,95,0.83)',
                                                 transition: '0.3s',
+                                                '& .MuiListItemText-primary': {
+                                                    color: '#ecd9d9', // Change the text color
+                                                },
+                                                '& .MuiListItemIcon-root': {
+                                                    color: '#ecd9d9', // Change the icon color
+                                                },
                                             },
                                             ...(location.pathname === item.to && {
                                                 backgroundColor: 'rgba(117,90,95,0.83)',
                                                 fontWeight: 'bold',
+                                                '& .MuiListItemText-primary': {
+                                                    color: '#ecd9d9',
+                                                },
+                                                '& .MuiListItemIcon-root': {
+                                                    color: '#ecd9d9',
+                                                },
                                             }),
                                         }}
                                     >
                                         <ListItemIcon sx={{ color: '#432e32' }}>{item.icon}</ListItemIcon>
                                         <ListItemText
                                             primary={item.text}
-                                            sx={{
-                                                color: '#432e32',
-                                                fontFamily: 'Fira Code, monospace',
-                                                fontSize: '25px', // Increase font size
-                                                fontWeight: 'bold', // Make text bold
+                                            primaryTypographyProps={{
+                                                sx: {
+                                                    color: '#432e32', // Custom text color
+                                                    fontFamily: 'Montserrat, sans-serif', // Sleek and geometric
+                                                    fontSize: '16px', // Custom font size
+                                                    fontWeight: 'bold', // Custom font weight
+                                                },
                                             }}
                                         />
                                     </ListItemButton>
@@ -138,8 +166,18 @@ export default function HoverableSidebar() {
 
             <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: '#bda6a6',opacity: 0.9, borderRadius: '16px', marginLeft: '20px' }}>
                 {/* Upper box for the page title */}
-                <Box sx={{ padding: '16px', backgroundColor: '#674b50', borderRadius: '8px', marginBottom: '20px' }}>
-                    <Typography variant="h5" sx={{ color: '#ecd9d9', fontWeight: 'bold',fontFamily: 'Roboto, sans-serif', textAlign: 'right' }}>
+                <Box
+                    sx={{ padding: '16px', backgroundColor: '#674b50', borderRadius: '8px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    {/* Left side for date and time */}
+                    <Typography variant="h6" sx={{ color: '#ecd9d9', fontWeight: 'bold', fontFamily: 'Roboto, sans-serif' }}>
+                        {currentTime.toLocaleDateString()}  -  {currentTime.toLocaleTimeString()}
+                    </Typography>
+
+                    {/* Right side for page title */}
+                    <Typography
+                        variant="h5"
+                        sx={{ color: '#ecd9d9', fontWeight: 'bold', fontFamily: 'Roboto, sans-serif', textAlign: 'right' }}
+                    >
                         {/* Dynamic page title based on the current route */}
                         {(() => {
                             switch (location.pathname) {
