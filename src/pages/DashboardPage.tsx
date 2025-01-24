@@ -1,9 +1,11 @@
-import {Container} from "@mui/material";
+import DashboardCardsComponent from "../components/dashboard/DashboardCardsComponent.tsx";
 
 function DashboardPage() {
     return (
         <>
-            <Container></Container>
+            <div className="mx-5">
+                <DashboardCardsComponent />
+            </div>
         </>
     )
 }
