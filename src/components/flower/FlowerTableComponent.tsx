@@ -45,7 +45,7 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: {
             />
 
             {/* Table */}
-            <table className="mt-7 min-w-full border-collapse border-2 border-green-800 bg-transparent shadow-lg sm:rounded-lg">
+            <table className="mt-7 min-w-full bg-[#bda6a6] border-collapse border-2 border-black shadow-lg sm:rounded-lg">
                 <thead>
                 <tr className="bg-gray-100 text-gray-600 text-xs uppercase tracking-wider">
                     <th className="px-6 py-3 text-left font-bold">Code</th>
@@ -62,7 +62,7 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: {
                     flowers.map((flower: Flower, index: number) => (
                         <tr
                             key={index}
-                            className="hover:bg-[#5ea080] even:bg-transparent text-gray-700 border-t"
+                            className="hover:bg- even:bg-transparent text-gray-700 border-t"
                         >
                             <td className="px-6 py-4">{flower.flower_code}</td>
                             <td className="px-6 py-4">{flower.flower_name}</td>
@@ -84,13 +84,13 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: {
                                 <div className="flex items-center justify-center gap-2">
                                     <button
                                         onClick={() => onEditFlower(flower)}
-                                        className="px-4 py-2 text-xs font-bold text-white bg-green-800 rounded hover:bg-green-700 shadow-md"
+                                        className="px-4 py-2 text-xs font-bold text-white bg-pink-900 rounded hover:bg-pink-800 shadow-md"
                                     >
                                         Edit
                                     </button>
                                     <button
                                         onClick={() => openDeleteModal(flower.flower_code)}
-                                        className="px-4 py-2 text-xs font-bold text-white bg-black rounded hover:bg-red-900 shadow-md"
+                                        className="px-4 py-2 text-xs font-bold text-white bg-black rounded hover:bg-gray-900 shadow-md"
                                     >
                                         Delete
                                     </button>

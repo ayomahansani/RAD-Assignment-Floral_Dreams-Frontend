@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import { addFlower, updateFlower } from "../../reducers/FlowerSlice.ts";
 import { Flower } from "../../models/flower.ts";
 
@@ -7,7 +7,7 @@ interface RootState {
     flower: Flower[];
 }
 
-const FlowerFormComponent = () => {
+const FlowerFormComponent = forwardRef((props, ref) => {
     const flowers = useSelector((store: RootState) => store.flower);
     const dispatch = useDispatch();
 
@@ -21,6 +21,19 @@ const FlowerFormComponent = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
 
     const fileInput1Ref = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => ({
+        editFlower(flower: Flower) {
+            console.log("Editing flower:", flower); // Debugging
+            setFlowerCode(flower.flower_code);
+            setFlowerName(flower.flower_name);
+            setFlowerColour(flower.flower_colour);
+            setFlowerQuality(flower.flower_quality);
+            setFlowerSeller(flower.flower_seller);
+            setPreviewFlowerImage(flower.flower_image || null);
+            setEditMode(true);
+        },
+    }));
 
     const handleFlowerOperation = (type: "ADD_FLOWER" | "UPDATE_FLOWER") => {
         if (!flowerCode || !flowerName || !flowerQuality || !flowerColour || !flowerSeller) {
@@ -37,13 +50,18 @@ const FlowerFormComponent = () => {
             flower_seller: flowerSeller,
         };
 
-        if (type === "ADD_FLOWER") {
-            dispatch(addFlower(newFlower));
-            clearForm();
-        } else if (type === "UPDATE_FLOWER") {
-            dispatch(updateFlower(newFlower));
-            clearForm();
-            setEditMode(false);
+        switch (type) {
+            case "ADD_FLOWER":
+                dispatch(addFlower(newFlower));
+                clearForm();
+                break;
+            case "UPDATE_FLOWER":
+                dispatch(updateFlower(newFlower));
+                clearForm();
+                setEditMode(false);
+                break;
+            default:
+                break;
         }
     };
 
@@ -216,6 +234,6 @@ const FlowerFormComponent = () => {
             </form>
         </>
     );
-};
+});
 
 export default FlowerFormComponent;

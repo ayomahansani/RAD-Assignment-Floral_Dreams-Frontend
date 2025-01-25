@@ -1,12 +1,15 @@
 import FlowerFormComponent from "../components/flower/FlowerFormComponent.tsx";
 import FlowerTableComponent from "../components/flower/FlowerTableComponent.tsx";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import {useRef, useState} from "react";
+import {useSelector} from "react-redux";
 import {Flower} from "../models/flower.ts";
 
 const FlowerPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const flowers = useSelector((store) => store.flower);
+
+    // Reference to call `editFlower` in FlowerFormComponent
+    const flowerFormRef = useRef<any>(null);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -17,7 +20,17 @@ const FlowerPage = () => {
     };
 
     const handleEditFlower = (flower: Flower) => {
-        openModal(); // Open the modal for editing
+        // Open the modal first
+        openModal();
+
+        // Delay the call to ensure FlowerFormComponent is rendered
+        setTimeout(() => {
+            if (flowerFormRef.current) {
+                flowerFormRef.current.editFlower(flower); // Call the edit function
+            } else {
+                console.error("flowerFormRef is null after opening modal");
+            }
+        }, 0);
     };
 
     return (
@@ -38,9 +51,9 @@ const FlowerPage = () => {
                     <div
                         className="bg-[#bda6a6] p-6 rounded-lg shadow-lg relative"
                         style={{
-                            width: "70%", // Set a narrower width
-                            maxWidth: "600px", // Optional: Set a maximum width for larger screens
-                            minWidth: "300px", // Optional: Ensure the modal doesn't shrink too much
+                            width: "70%",
+                            maxWidth: "600px",
+                            minWidth: "300px",
                         }}
                     >
                         {/* Close Button */}
@@ -51,7 +64,7 @@ const FlowerPage = () => {
                             ✖
                         </button>
                         {/* Flower Form */}
-                        <FlowerFormComponent />
+                        <FlowerFormComponent ref={flowerFormRef} />
                     </div>
                 </div>
             )}
