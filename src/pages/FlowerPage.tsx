@@ -64,7 +64,7 @@ const FlowerPage = () => {
                             ✖
                         </button>
                         {/* Flower Form */}
-                        <FlowerFormComponent ref={flowerFormRef} />
+                        <FlowerFormComponent ref={flowerFormRef} onCloseModal={closeModal} />
                     </div>
                 </div>
             )}

@@ -2,12 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import { addFlower, updateFlower } from "../../reducers/FlowerSlice.ts";
 import { Flower } from "../../models/flower.ts";
+import {toast} from "react-toastify";
 
 interface RootState {
     flower: Flower[];
 }
 
-const FlowerFormComponent = forwardRef((props, ref) => {
+const FlowerFormComponent = forwardRef((
+    { onCloseModal }: { onCloseModal: () => void },
+    ref
+) => {
     const flowers = useSelector((store: RootState) => store.flower);
     const dispatch = useDispatch();
 
@@ -37,7 +41,10 @@ const FlowerFormComponent = forwardRef((props, ref) => {
 
     const handleFlowerOperation = (type: "ADD_FLOWER" | "UPDATE_FLOWER") => {
         if (!flowerCode || !flowerName || !flowerQuality || !flowerColour || !flowerSeller) {
-            alert("Please fill out all required fields.");
+            toast.error("Please fill out all required fields.", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
             return;
         }
 
@@ -53,12 +60,22 @@ const FlowerFormComponent = forwardRef((props, ref) => {
         switch (type) {
             case "ADD_FLOWER":
                 dispatch(addFlower(newFlower));
+                toast.success("Flower saved successfully!", {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                });
                 clearForm();
+                onCloseModal(); // Close the modal after saving
                 break;
             case "UPDATE_FLOWER":
                 dispatch(updateFlower(newFlower));
+                toast.success("Flower updated successfully!", {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                });
                 clearForm();
                 setEditMode(false);
+                onCloseModal(); // Close the modal after saving
                 break;
             default:
                 break;

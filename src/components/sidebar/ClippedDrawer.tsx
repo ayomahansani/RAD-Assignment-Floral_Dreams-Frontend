@@ -20,10 +20,6 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import DashboardPage from '../../pages/DashboardPage.tsx';
-import StaffPage from '../../pages/StaffPage.tsx';
-import VehiclePage from '../../pages/VehiclePage.tsx';
-import EquipmentsPage from '../../pages/Equipments.tsx';
-import FieldPage from "../../pages/FieldPage.tsx";
 import FlowerPage from "../../pages/FlowerPage.tsx";
 import {useEffect, useState} from "react";
 
@@ -207,10 +203,10 @@ export default function HoverableSidebar() {
                     <Routes>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/flower" element={<FlowerPage />} />
-                        <Route path="/staff" element={<StaffPage />} />
-                        <Route path="/vehicle" element={<VehiclePage />} />
-                        <Route path="/equipment" element={<EquipmentsPage />} />
-                        <Route path="/field" element={<FieldPage />} />
+                        <Route path="/customer" element={<FlowerPage />} />
+                        <Route path="/placeOrder" element={<FlowerPage />} />
+                        <Route path="/orderDetails" element={<FlowerPage />} />
+                        <Route path="/payment" element={<FlowerPage />} />
                     </Routes>
                 </Box>
 

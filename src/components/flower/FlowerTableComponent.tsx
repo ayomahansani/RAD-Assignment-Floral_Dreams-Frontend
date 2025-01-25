@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {useState} from "react";
 import {deleteFlower} from "../../reducers/FlowerSlice.ts";
 import ConfirmationModal from "../modals/ConfirmationModal.tsx";
+import {toast} from "react-toastify";
 
 
 const FlowerTableComponent = ({flowers = [], onEditFlower,}: {
@@ -23,6 +24,10 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: {
     const handleConfirmDelete = () => {
         if (flowerToDelete) {
             dispatch(deleteFlower({ flower_code: flowerToDelete }));
+            toast.success("Flower deleted successfully!", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
         }
         setModalOpen(false);
         setFlowerToDelete(null);
