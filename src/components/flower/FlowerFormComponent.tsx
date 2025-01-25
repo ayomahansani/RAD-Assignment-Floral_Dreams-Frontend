@@ -87,10 +87,16 @@ const FlowerFormComponent = () => {
 
     return (
         <>
-            <form className="mx-1 mt-0 p-3 rounded-lg border-2 border-black shadow-lg bg-[#bda6a6]">
-                <div className="grid gap-6 mb-6 md:grid-cols-3">
+            <form
+                className="mx-auto mt-0 p-3 rounded-lg border-2 border-[#432e32] shadow-lg bg-[#bda6a6]"
+                style={{
+                    width: "100%", // Adjust form width
+                    maxWidth: "600px", // Set a maximum width for responsiveness
+                }}
+            >
+                <div className="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
-                        <label htmlFor="flower_code" className="block mb-2 text-sm font-bold text-gray-700">
+                        <label htmlFor="flower_code" className="block mb-2 text-sm font-bold text-[#432e32]">
                             Code
                         </label>
                         <input
@@ -99,13 +105,13 @@ const FlowerFormComponent = () => {
                             value={flowerCode || ""}
                             onChange={(e) => setFlowerCode(Number(e.target.value))}
                             onKeyDown={handleSearchByFlowerCode}
-                            className="w-full p-1 border border-green-800 rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
                             placeholder="F123"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="flower_name" className="block mb-2 text-sm font-bold text-gray-700">
+                        <label htmlFor="flower_name" className="block mb-2 text-sm font-bold text-[#432e32]">
                             Name
                         </label>
                         <input
@@ -113,13 +119,13 @@ const FlowerFormComponent = () => {
                             id="flower_name"
                             value={flowerName}
                             onChange={(e) => setFlowerName(e.target.value)}
-                            className="w-full p-1 border border-green-800 rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
                             placeholder="Rose"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="flower_colour" className="block mb-2 text-sm font-bold text-gray-700">
+                        <label htmlFor="flower_colour" className="block mb-2 text-sm font-bold text-[#432e32]">
                             Colour
                         </label>
                         <input
@@ -127,24 +133,24 @@ const FlowerFormComponent = () => {
                             id="flower_colour"
                             value={flowerColour}
                             onChange={(e) => setFlowerColour(e.target.value)}
-                            className="w-full p-1 border border-green-800 rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
                             placeholder="White"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="flower_quality" className="block mb-2 text-sm font-bold text-gray-700">
+                        <label htmlFor="flower_quality" className="block mb-2 text-sm font-bold text-[#432e32]">
                             Quality
                         </label>
                         <select
                             id="flower_quality"
-                            className="w-full p-1 border border-green-800 text-md rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md"
                             value={flowerQuality}
                             onChange={(e) => setFlowerQuality(e.target.value)}
                             required
                         >
                             <option value="" disabled>
-                                Select the quality
+                                select the quality
                             </option>
                             <option value="Premium">Premium</option>
                             <option value="Average">Average</option>
@@ -152,7 +158,7 @@ const FlowerFormComponent = () => {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="flower_seller" className="block mb-2 text-sm font-bold text-gray-700">
+                        <label htmlFor="flower_seller" className="block mb-2 text-sm font-bold text-[#432e32]">
                             Seller
                         </label>
                         <input
@@ -160,13 +166,13 @@ const FlowerFormComponent = () => {
                             id="flower_seller"
                             value={flowerSeller}
                             onChange={(e) => setFlowerSeller(e.target.value)}
-                            className="w-full p-1 border border-green-800 rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
                             placeholder="Flocky Flowers"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="flower_image" className="block mb-2 text-sm font-bold text-gray-700">
+                        <label htmlFor="flower_image" className="block mb-2 text-sm font-bold text-[#432e32]">
                             Image
                         </label>
                         <input
@@ -174,11 +180,11 @@ const FlowerFormComponent = () => {
                             id="flower_image"
                             ref={fileInput1Ref}
                             onChange={(e) => handleImageChange(e, setPreviewFlowerImage)}
-                            className="w-full p-1.5 text-xs border border-green-800 rounded bg-gray-100 shadow-md"
+                            className="w-full p-1.5 text-xs border border-[#432e32] rounded bg-gray-100 shadow-md"
                             accept="image/*"
                         />
                         {previewFlowerImage && (
-                            <img src={previewFlowerImage} alt="Preview" className="mt-2 h-20" />
+                            <img src={previewFlowerImage} alt="Preview" className="mt-2 h-20"/>
                         )}
                     </div>
                 </div>
@@ -187,14 +193,22 @@ const FlowerFormComponent = () => {
                     <button
                         type="button"
                         onClick={() => handleFlowerOperation(editMode ? "UPDATE_FLOWER" : "ADD_FLOWER")}
-                        className="w-full text-white bg-black hover:bg-transparent hover:text-black hover:border-2 hover:border-black font-bold rounded-lg text-sm px-5 py-2 text-center shadow-md"
+                        className="w-full h-9 bg-yellow-600 text-black font-bold border-2 border-yellow-600 rounded-lg text-center shadow-lg hover:bg-transparent hover:text-black hover:border-black"
+                        style={{
+                            fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
+                            letterSpacing: "0.5px", // Slight letter spacing for elegance
+                        }}
                     >
                         {editMode ? "Update Flower" : "Add Flower"}
                     </button>
                     <button
                         type="button"
                         onClick={() => clearForm()}
-                        className="w-full text-white bg-black hover:bg-black border-2 border-green-800 font-bold rounded-lg text-sm px-5 py-2 text-center shadow-md"
+                        className="w-full h-9 bg-pink-900 text-white font-bold border-2 border-pink-900 rounded-lg text-center shadow-lg hover:bg-transparent hover:text-black hover:border-black"
+                        style={{
+                            fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
+                            letterSpacing: "0.5px", // Slight letter spacing for elegance
+                        }}
                     >
                         Clear
                     </button>

@@ -2,6 +2,7 @@ import FlowerFormComponent from "../components/flower/FlowerFormComponent.tsx";
 import {useState} from "react";
 
 const FlowerPage = () => {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -27,16 +28,23 @@ const FlowerPage = () => {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-4xl relative">
+                    <div
+                        className="bg-[#bda6a6] p-6 rounded-lg shadow-lg relative"
+                        style={{
+                            width: "70%", // Set a narrower width
+                            maxWidth: "600px", // Optional: Set a maximum width for larger screens
+                            minWidth: "300px", // Optional: Ensure the modal doesn't shrink too much
+                        }}
+                    >
                         {/* Close Button */}
                         <button
                             onClick={closeModal}
-                            className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+                            className="absolute top-2 right-2 text-[#432e32] hover:text-black"
                         >
                             ✖
                         </button>
                         {/* Flower Form */}
-                        <FlowerFormComponent />
+                        <FlowerFormComponent/>
                     </div>
                 </div>
             )}
