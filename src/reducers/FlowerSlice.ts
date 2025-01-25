@@ -18,8 +18,8 @@ const flowerSlice = createSlice({
         },
         deleteFlower: (state, action) => {
             return state.filter((flower) => flower.flower_code !== action.payload.flower_code);
-        },
-    },
+        }
+    }
 });
 
 export const {addFlower, updateFlower, deleteFlower} = flowerSlice.actions;
