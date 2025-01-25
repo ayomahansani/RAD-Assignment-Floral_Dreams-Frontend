@@ -1,9 +1,12 @@
 import FlowerFormComponent from "../components/flower/FlowerFormComponent.tsx";
-import {useState} from "react";
+import FlowerTableComponent from "../components/flower/FlowerTableComponent.tsx";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import {Flower} from "../models/flower.ts";
 
 const FlowerPage = () => {
-
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const flowers = useSelector((store) => store.flower);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -13,10 +16,14 @@ const FlowerPage = () => {
         setIsModalOpen(false);
     };
 
+    const handleEditFlower = (flower: Flower) => {
+        openModal(); // Open the modal for editing
+    };
+
     return (
-        <div className="relative p-4">
+        <div className="relative p-3">
             {/* Add New Button */}
-            <div className="absolute top-1 right-4">
+            <div className="mb-3 text-right">
                 <button
                     onClick={openModal}
                     className="bg-yellow-500 text-black font-extrabold px-4 py-2 rounded-md shadow-lg transition-colors"
@@ -44,10 +51,18 @@ const FlowerPage = () => {
                             ✖
                         </button>
                         {/* Flower Form */}
-                        <FlowerFormComponent/>
+                        <FlowerFormComponent />
                     </div>
                 </div>
             )}
+
+            {/* Table */}
+            <div>
+                <FlowerTableComponent
+                    flowers={flowers}
+                    onEditFlower={handleEditFlower}
+                />
+            </div>
         </div>
     );
 };

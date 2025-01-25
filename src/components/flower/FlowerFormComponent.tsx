@@ -189,7 +189,7 @@ const FlowerFormComponent = () => {
                     </div>
                 </div>
 
-                <div className="grid gap-5 md:grid-cols-2 mx-20 mt-4">
+                <div className="grid gap-5 md:grid-cols-2 mx-20 mt-5 mb-3">
                     <button
                         type="button"
                         onClick={() => handleFlowerOperation(editMode ? "UPDATE_FLOWER" : "ADD_FLOWER")}
