@@ -216,8 +216,8 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             <option value="" disabled>
                                 select the gender
                             </option>
-                            <option value="Male">Average</option>
-                            <option value="Female">Premium</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                 </div>

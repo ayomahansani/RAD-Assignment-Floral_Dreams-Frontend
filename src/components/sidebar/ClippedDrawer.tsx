@@ -22,6 +22,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DashboardPage from '../../pages/DashboardPage.tsx';
 import FlowerPage from "../../pages/FlowerPage.tsx";
 import {useEffect, useState} from "react";
+import CustomerPage from "../../pages/CustomerPage.tsx";
 
 const drawerWidth = 230;
 
@@ -203,7 +204,7 @@ export default function HoverableSidebar() {
                     <Routes>
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/flower" element={<FlowerPage />} />
-                        <Route path="/customer" element={<FlowerPage />} />
+                        <Route path="/customer" element={<CustomerPage />} />
                         <Route path="/placeOrder" element={<FlowerPage />} />
                         <Route path="/orderDetails" element={<FlowerPage />} />
                         <Route path="/payment" element={<FlowerPage />} />
