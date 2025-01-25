@@ -6,10 +6,7 @@ import ConfirmationModal from "../modals/ConfirmationModal.tsx";
 import {toast} from "react-toastify";
 
 
-const FlowerTableComponent = ({flowers = [], onEditFlower,}: {
-    flowers?: Flower[];
-    onEditFlower: (flower: Flower) => void;
-}) => {
+const FlowerTableComponent = ({flowers = [], onEditFlower,}: { flowers?: Flower[]; onEditFlower: (flower: Flower) => void; }) => {
     const dispatch = useDispatch();
 
     // Modal state
