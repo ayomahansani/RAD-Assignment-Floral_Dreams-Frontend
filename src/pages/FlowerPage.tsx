@@ -18,7 +18,7 @@ const FlowerPage = () => {
             <div className="absolute top-1 right-4">
                 <button
                     onClick={openModal}
-                    className="bg-black text-white px-4 py-2 rounded-lg shadow-lg transition-colors"
+                    className="bg-yellow-500 text-black font-extrabold px-4 py-2 rounded-md shadow-lg transition-colors"
                 >
                     Add New +
                 </button>
