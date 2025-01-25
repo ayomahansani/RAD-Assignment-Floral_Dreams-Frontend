@@ -8,10 +8,7 @@ interface RootState {
     flower: Flower[];
 }
 
-const FlowerFormComponent = forwardRef((
-    { onCloseModal }: { onCloseModal: () => void },
-    ref
-) => {
+const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => void }, ref) => {
     const flowers = useSelector((store: RootState) => store.flower);
     const dispatch = useDispatch();
 
@@ -28,7 +25,6 @@ const FlowerFormComponent = forwardRef((
 
     useImperativeHandle(ref, () => ({
         editFlower(flower: Flower) {
-            console.log("Editing flower:", flower); // Debugging
             setFlowerCode(flower.flower_code);
             setFlowerName(flower.flower_name);
             setFlowerColour(flower.flower_colour);
@@ -141,7 +137,7 @@ const FlowerFormComponent = forwardRef((
                             onChange={(e) => setFlowerCode(Number(e.target.value))}
                             onKeyDown={handleSearchByFlowerCode}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
-                            placeholder="F123"
+                            placeholder="01"
                             required
                         />
                     </div>

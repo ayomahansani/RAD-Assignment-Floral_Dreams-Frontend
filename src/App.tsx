@@ -10,6 +10,8 @@ function App() {
       <BrowserRouter>
         <RootLayout />
       </BrowserRouter>
+        
+        {/*for alerts*/}
         <ToastContainer />
     </>
   )
