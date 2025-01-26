@@ -53,8 +53,9 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: { flowers?: Flower[
                     <th className="px-6 py-3 text-left font-bold">Code</th>
                     <th className="px-6 py-3 text-left font-bold">Name</th>
                     <th className="px-6 py-3 text-left font-bold">Colour</th>
-                    <th className="px-6 py-3 text-left font-bold">Quality</th>
-                    <th className="px-6 py-3 text-left font-bold">Seller</th>
+                    <th className="px-6 py-3 text-left font-bold">Size</th>
+                    <th className="px-6 py-3 text-left font-bold">Unit Price</th>
+                    <th className="px-6 py-3 text-left font-bold">Quantity</th>
                     <th className="px-6 py-3 text-left font-bold">Image</th>
                     <th className="px-6 py-3 text-center font-bold">Actions</th>
                 </tr>
@@ -69,8 +70,9 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: { flowers?: Flower[
                             <td className="px-6 py-4">{flower.flower_code}</td>
                             <td className="px-6 py-4">{flower.flower_name}</td>
                             <td className="px-6 py-4">{flower.flower_colour}</td>
-                            <td className="px-6 py-4">{flower.flower_quality}</td>
-                            <td className="px-6 py-4">{flower.flower_seller}</td>
+                            <td className="px-6 py-4">{flower.flower_size}</td>
+                            <td className="px-6 py-4">{flower.flower_unit_price}</td>
+                            <td className="px-6 py-4">{flower.flower_qty_on_hand}</td>
                             <td className="px-6 py-4">
                                 {flower.flower_image ? (
                                     <img
@@ -102,7 +104,7 @@ const FlowerTableComponent = ({flowers = [], onEditFlower,}: { flowers?: Flower[
                     ))
                 ) : (
                     <tr>
-                        <td colSpan={7} className="text-center py-4 text-gray-500">
+                        <td colSpan={8} className="text-center py-4 text-gray-500">
                             No flowers available.
                         </td>
                     </tr>

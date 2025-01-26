@@ -15,9 +15,10 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
     const [flowerCode, setFlowerCode] = useState<number | undefined>();
     const [flowerName, setFlowerName] = useState<string>("");
     const [previewFlowerImage, setPreviewFlowerImage] = useState<string | null>(null);
-    const [flowerQuality, setFlowerQuality] = useState<string>("");
+    const [flowerSize, setFlowerSize] = useState<string>("");
     const [flowerColour, setFlowerColour] = useState<string>("");
-    const [flowerSeller, setFlowerSeller] = useState<string>("");
+    const [flowerUnitPrice, setFlowerUnitPrice] = useState<number | undefined>();
+    const [flowerQtyOnHand, setFlowerQtyOnHand] = useState<number | undefined>();
 
     const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -28,15 +29,16 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
             setFlowerCode(flower.flower_code);
             setFlowerName(flower.flower_name);
             setFlowerColour(flower.flower_colour);
-            setFlowerQuality(flower.flower_quality);
-            setFlowerSeller(flower.flower_seller);
+            setFlowerSize(flower.flower_size);
+            setFlowerUnitPrice(flower.flower_unit_price);
+            setFlowerQtyOnHand(flower.flower_qty_on_hand);
             setPreviewFlowerImage(flower.flower_image || null);
             setEditMode(true);
         },
     }));
 
     const handleFlowerOperation = (type: "ADD_FLOWER" | "UPDATE_FLOWER") => {
-        if (!flowerCode || !flowerName || !flowerQuality || !flowerColour || !flowerSeller) {
+        if (!flowerCode || !flowerName || !flowerSize || !flowerColour || !flowerUnitPrice || !flowerQtyOnHand) {
             toast.error("Please fill out all required fields.", {
                 position: "bottom-right",
                 autoClose: 2000,
@@ -48,9 +50,10 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
             flower_code: flowerCode,
             flower_name: flowerName,
             flower_image: previewFlowerImage || "",
-            flower_quality: flowerQuality,
+            flower_size: flowerSize,
             flower_colour: flowerColour,
-            flower_seller: flowerSeller,
+            flower_unit_price: flowerUnitPrice,
+            flower_qty_on_hand: flowerQtyOnHand,
         };
 
         switch (type) {
@@ -91,9 +94,10 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
     const clearForm = () => {
         setFlowerCode(undefined);
         setFlowerName("");
-        setFlowerQuality("");
+        setFlowerSize("");
         setFlowerColour("");
-        setFlowerSeller("");
+        setFlowerUnitPrice(undefined);
+        setFlowerQtyOnHand(undefined);
         setPreviewFlowerImage(null);
         setEditMode(false);
 
@@ -105,9 +109,10 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
             const foundFlower = flowers.find((flower: Flower) => flower.flower_code === flowerCode);
             if (foundFlower) {
                 setFlowerName(foundFlower.flower_name);
-                setFlowerQuality(foundFlower.flower_quality);
+                setFlowerSize(foundFlower.flower_size);
                 setFlowerColour(foundFlower.flower_colour);
-                setFlowerSeller(foundFlower.flower_seller);
+                setFlowerUnitPrice(foundFlower.flower_unit_price);
+                setFlowerQtyOnHand(foundFlower.flower_qty_on_hand);
                 setPreviewFlowerImage(foundFlower.flower_image || null);
                 setEditMode(true);
             } else {
@@ -170,35 +175,49 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                         />
                     </div>
                     <div>
-                        <label htmlFor="flower_quality" className="block mb-2 text-sm font-bold text-[#432e32]">
-                            Quality
+                        <label htmlFor="flower_size" className="block mb-2 text-sm font-bold text-[#432e32]">
+                            Size
                         </label>
                         <select
-                            id="flower_quality"
+                            id="flower_size"
                             className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md"
-                            value={flowerQuality}
-                            onChange={(e) => setFlowerQuality(e.target.value)}
+                            value={flowerSize}
+                            onChange={(e) => setFlowerSize(e.target.value)}
                             required
                         >
                             <option value="" disabled>
-                                select the quality
+                                select the size
                             </option>
-                            <option value="Premium">Premium</option>
-                            <option value="Average">Average</option>
-                            <option value="Low">Low</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="flower_seller" className="block mb-2 text-sm font-bold text-[#432e32]">
-                            Seller
+                        <label htmlFor="flower_unit_price" className="block mb-2 text-sm font-bold text-[#432e32]">
+                            Unit Price
                         </label>
                         <input
-                            type="text"
-                            id="flower_seller"
-                            value={flowerSeller}
-                            onChange={(e) => setFlowerSeller(e.target.value)}
+                            type="number"
+                            id="flower_unit_price"
+                            value={flowerUnitPrice}
+                            onChange={(e) => setFlowerUnitPrice(Number(e.target.value))}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
-                            placeholder="Flocky Flowers"
+                            placeholder="567.70"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="flower_qty_on_hand" className="block mb-2 text-sm font-bold text-[#432e32]">
+                            Qty On Hand
+                        </label>
+                        <input
+                            type="number"
+                            id="flower_qty_on_hand"
+                            value={flowerQtyOnHand}
+                            onChange={(e) => setFlowerQtyOnHand(Number(e.target.value))}
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            placeholder="43"
                             required
                         />
                     </div>
@@ -230,7 +249,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             letterSpacing: "0.5px", // Slight letter spacing for elegance
                         }}
                     >
-                        {editMode ? "Update Flower" : "Add Flower"}
+                    {editMode ? "Update Flower" : "Add Flower"}
                     </button>
                     <button
                         type="button"
