@@ -23,6 +23,7 @@ import DashboardPage from '../../pages/DashboardPage.tsx';
 import FlowerPage from "../../pages/FlowerPage.tsx";
 import {useEffect, useState} from "react";
 import CustomerPage from "../../pages/CustomerPage.tsx";
+import PlaceOrderPage from "../../pages/PlaceOrderPage.tsx";
 
 const drawerWidth = 230;
 
@@ -205,7 +206,7 @@ export default function HoverableSidebar() {
                         <Route path="/" element={<DashboardPage />} />
                         <Route path="/flower" element={<FlowerPage />} />
                         <Route path="/customer" element={<CustomerPage />} />
-                        <Route path="/placeOrder" element={<FlowerPage />} />
+                        <Route path="/placeOrder" element={<PlaceOrderPage />} />
                         <Route path="/orderDetails" element={<FlowerPage />} />
                         <Route path="/payment" element={<FlowerPage />} />
                     </Routes>

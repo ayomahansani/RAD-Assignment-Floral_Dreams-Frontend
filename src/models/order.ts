@@ -5,7 +5,7 @@ export class Order {
     order_id: number;
     customer: Customer; // Reference to a Customer object
     order_date: string;
-    order_items: OrderItem[]; // List of items in the order
+    order_items: OrderItem[]; // List of items in the placeOrder
     wrapping_charges: number;
     decoration_charges: number;
     sub_total: number;
