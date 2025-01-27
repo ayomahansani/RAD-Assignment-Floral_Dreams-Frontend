@@ -39,7 +39,7 @@ const FlowerPage = () => {
             <div className="mb-3 text-right">
                 <button
                     onClick={openModal}
-                    className="bg-yellow-500 text-black font-extrabold px-4 py-2 rounded-md shadow-lg transition-colors"
+                    className="bg-yellow-500 text-black font-extrabold px-4 py-2 rounded-md shadow-lg shadow-[#432e32] transition-colors hover:bg-gray-100"
                 >
                     Add New +
                 </button>

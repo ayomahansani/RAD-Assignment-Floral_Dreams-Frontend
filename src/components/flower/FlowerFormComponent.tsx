@@ -141,7 +141,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             value={flowerCode || ""}
                             onChange={(e) => setFlowerCode(Number(e.target.value))}
                             onKeyDown={handleSearchByFlowerCode}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="01"
                             required
                         />
@@ -155,7 +155,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             id="flower_name"
                             value={flowerName}
                             onChange={(e) => setFlowerName(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Rose"
                             required
                         />
@@ -169,7 +169,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             id="flower_colour"
                             value={flowerColour}
                             onChange={(e) => setFlowerColour(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="White"
                             required
                         />
@@ -180,7 +180,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                         </label>
                         <select
                             id="flower_size"
-                            className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             value={flowerSize}
                             onChange={(e) => setFlowerSize(e.target.value)}
                             required
@@ -202,7 +202,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             id="flower_unit_price"
                             value={flowerUnitPrice}
                             onChange={(e) => setFlowerUnitPrice(Number(e.target.value))}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="567.70"
                             required
                         />
@@ -216,7 +216,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             id="flower_qty_on_hand"
                             value={flowerQtyOnHand}
                             onChange={(e) => setFlowerQtyOnHand(Number(e.target.value))}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="43"
                             required
                         />
@@ -230,7 +230,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             id="flower_image"
                             ref={fileInput1Ref}
                             onChange={(e) => handleImageChange(e, setPreviewFlowerImage)}
-                            className="w-full p-1.5 text-xs border border-[#432e32] rounded bg-gray-100 shadow-md"
+                            className="w-full p-1.5 text-xs border border-[#432e32] rounded bg-gray-100 shadow-md shadow-[#7e6868]"
                             accept="image/*"
                         />
                         {previewFlowerImage && (
@@ -243,7 +243,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                     <button
                         type="button"
                         onClick={() => handleFlowerOperation(editMode ? "UPDATE_FLOWER" : "ADD_FLOWER")}
-                        className="w-full h-9 bg-yellow-600 text-black font-bold border-2 border-yellow-600 rounded-lg text-center shadow-lg hover:bg-transparent hover:text-black hover:border-black"
+                        className="w-full h-9 bg-yellow-600 text-black font-bold border-2 border-yellow-600 rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                         style={{
                             fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
                             letterSpacing: "0.5px", // Slight letter spacing for elegance
@@ -254,7 +254,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                     <button
                         type="button"
                         onClick={() => clearForm()}
-                        className="w-full h-9 bg-pink-900 text-white font-bold border-2 border-pink-900 rounded-lg text-center shadow-lg hover:bg-transparent hover:text-black hover:border-black"
+                        className="w-full h-9 bg-pink-900 text-white font-bold border-2 border-pink-900 rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                         style={{
                             fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
                             letterSpacing: "0.5px", // Slight letter spacing for elegance

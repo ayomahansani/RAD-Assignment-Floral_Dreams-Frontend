@@ -127,7 +127,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             value={customerId || ""}
                             onChange={(e) => setCustomerId(Number(e.target.value))}
                             onKeyDown={handleSearchByCustomerId}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="01"
                             required
                         />
@@ -141,7 +141,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             id="customer_firstName"
                             value={customerFirstName}
                             onChange={(e) => setCustomerFirstName(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Kiyo"
                             required
                         />
@@ -155,7 +155,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             id="customer_lastName"
                             value={customerLastName}
                             onChange={(e) => setCustomerLastName(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Mohan"
                             required
                         />
@@ -169,7 +169,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             id="customer_phone"
                             value={customerPhone}
                             onChange={(e) => setCustomerPhone(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="0773425678"
                             required
                         />
@@ -183,7 +183,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             id="customer_email"
                             value={customerEmail}
                             onChange={(e) => setCustomerEmail(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="kiyo@gmail.com"
                             required
                         />
@@ -197,7 +197,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             id="customer_address"
                             value={customerAddress}
                             onChange={(e) => setCustomerAddress(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Colombo"
                             required
                         />
@@ -208,7 +208,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                         </label>
                         <select
                             id="gender"
-                            className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md"
+                            className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             value={gender}
                             onChange={(e) => setGender(e.target.value)}
                             required
@@ -226,7 +226,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                     <button
                         type="button"
                         onClick={() => handleCustomerOperation(editMode ? "UPDATE_CUSTOMER" : "ADD_CUSTOMER")}
-                        className="w-full h-9 bg-yellow-600 text-black font-bold border-2 border-yellow-600 rounded-lg text-center shadow-lg hover:bg-transparent hover:text-black hover:border-black"
+                        className="w-full h-9 bg-yellow-600 text-black font-bold border-2 border-yellow-600 rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                         style={{
                             fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
                             letterSpacing: "0.5px", // Slight letter spacing for elegance
@@ -237,7 +237,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                     <button
                         type="button"
                         onClick={() => clearForm()}
-                        className="w-full h-9 bg-pink-900 text-white font-bold border-2 border-pink-900 rounded-lg text-center shadow-lg hover:bg-transparent hover:text-black hover:border-black"
+                        className="w-full h-9 bg-pink-900 text-white font-bold border-2 border-pink-900 rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                         style={{
                             fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
                             letterSpacing: "0.5px", // Slight letter spacing for elegance
