@@ -73,6 +73,7 @@ export default function HoverableSidebar() {
                         marginRight: '20px',
                         transition: 'width 0.3s',
                         overflowX: 'hidden',
+                        // bda6a6
                     },
                 }}
             >

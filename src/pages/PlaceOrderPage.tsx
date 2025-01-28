@@ -10,12 +10,12 @@ const PlaceOrderPage = () => {
     };
 
     return (
-        <div className="p-6">
+        <div className="p-2">
             {/* Forms Section */}
             <PlaceOrderFormComponent onAddOrder={handleAddOrder} />
 
             {/* Add gap between the form and table */}
-            <div className="my-4"></div> {/* Vertical margin for gap */}
+            <div className="my-5"></div> {/* Vertical margin for gap */}
 
             {/* Table Section */}
             <PlaceOrderTableComponent orders={orders} />

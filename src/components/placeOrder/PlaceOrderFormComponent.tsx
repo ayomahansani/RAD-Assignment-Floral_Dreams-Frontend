@@ -63,7 +63,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
     };
 
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-3">
 
             {/* Original Order Form */}
             <div className="w-1/2 p-4 border-2 border-[#432e32] rounded-lg shadow-md bg-[#bda6a6] mb-2">
@@ -242,7 +242,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Wrapping Chargers</label>
                         <input
                             type="number"
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Enter charge"
                             required
                         />
@@ -253,7 +253,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Decoration Chargers</label>
                         <input
                             type="number"
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Enter charge"
                             required
                         />
@@ -276,7 +276,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Paid Amount</label>
                         <input
                             type="text"
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Enter cash"
                             required
                         />
@@ -289,13 +289,13 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                         </label>
                         <select
                             id="discount"
-                            className="w-full p-1 border border-[#432e32] text-md rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 border border-[#432e32] text-md rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             value={discount}
                             onChange={(e) => setDiscount(e.target.value)}
                             required
                         >
                             <option value="" disabled>
-                                Select the discount
+                                Select discount
                             </option>
                             <option value="5">5%</option>
                             <option value="10">10%</option>
@@ -315,7 +315,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                         />
                     </div>
 
-                    <label className="block text-md font-bold text-[#432e32]">Total Amount</label>
+                    <label className="block mt-1.5 text-md font-bold text-[#432e32]">Total Amount</label>
 
                     {/* Place Order Buttons */}
                     <div className="col-span-2 flex gap-2">
@@ -327,7 +327,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             readOnly
                         />
                         <button
-                            className="w-1/2 p-2 bg-green-500 text-white font-bold rounded"
+                            className="w-full h-9 bg-[#7fd6a6] text-black font-bold border-2 border-[#7fd6a6] rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                         >
                             Place Order
                         </button>
