@@ -9,6 +9,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
+
+import {useEffect, useState} from "react";
 import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -21,9 +23,9 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import DashboardPage from '../../pages/DashboardPage.tsx';
 import FlowerPage from "../../pages/FlowerPage.tsx";
-import {useEffect, useState} from "react";
 import CustomerPage from "../../pages/CustomerPage.tsx";
 import PlaceOrderPage from "../../pages/PlaceOrderPage.tsx";
+import OrderDetailsPage from "../../pages/OrderDetailsPage.tsx";
 
 const drawerWidth = 230;
 
@@ -217,13 +219,12 @@ export default function HoverableSidebar() {
                         <Route path="/flower" element={<FlowerPage />} />
                         <Route path="/customer" element={<CustomerPage />} />
                         <Route path="/placeOrder" element={<PlaceOrderPage />} />
-                        <Route path="/orderDetails" element={<FlowerPage />} />
+                        <Route path="/orderDetails" element={<OrderDetailsPage />} />
                         <Route path="/payment" element={<FlowerPage />} />
                     </Routes>
                 </Box>
 
             </Box>
-
 
         </Box>
     );
