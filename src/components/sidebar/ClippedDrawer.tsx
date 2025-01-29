@@ -9,7 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
-import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
@@ -30,6 +30,8 @@ const drawerWidth = 230;
 export default function HoverableSidebar() {
 
     const [currentTime, setCurrentTime] = useState(new Date());
+    const navigate = useNavigate(); // Hook for navigation
+    const location = useLocation();
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -39,7 +41,13 @@ export default function HoverableSidebar() {
         return () => clearInterval(timer); // Clean up the timer on unmount
     }, []);
 
-    const location = useLocation();
+    const handleLogout = () => {
+        // Perform any logout logic here (e.g., clear tokens, session, etc.)
+        console.log("User logged out");
+
+        // Navigate to the login page
+        navigate("/login");
+    };
 
     return (
         <Box sx={{
@@ -106,7 +114,7 @@ export default function HoverableSidebar() {
                             { text: 'Place Order', icon: <ShoppingCartIcon />, to: '/placeOrder' }, // Shopping Cart Icon for Orders
                             { text: 'Order Details', icon: <ReceiptLongIcon />, to: '/orderDetails' }, // Receipt Icon for Order Details
                             { text: 'Payment', icon: <PaymentIcon />, to: '/payment' }, // Payment Icon for Transactions
-                            { text: 'Log Out', icon: <ExitToAppIcon />, to: '/logout' }, // Log Out Icon
+                            { text: 'Log Out', icon: <ExitToAppIcon />, to: '/login' }, // Log Out Icon
                         ].map((item) => (
                             <Tooltip title={item.text} placement="right" key={item.text}>
                                 <ListItem
@@ -120,6 +128,7 @@ export default function HoverableSidebar() {
                                     <ListItemButton
                                         component={Link}
                                         to={item.to}
+                                        onClick={item.text === 'Log Out' ? handleLogout : undefined} // Add onClick handler for logout
                                         sx={{
                                             '&:hover': {
                                                 backgroundColor: 'rgba(117,90,95,0.83)',
