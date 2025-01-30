@@ -41,7 +41,7 @@ function SignUpFormComponent() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
-                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-pink-100"
+                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-red-200"
                             />
                         </div>
                         <div>
@@ -51,7 +51,7 @@ function SignUpFormComponent() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-pink-100 mb-6"
+                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-red-200 mb-6"
                             />
                         </div>
                         <button
