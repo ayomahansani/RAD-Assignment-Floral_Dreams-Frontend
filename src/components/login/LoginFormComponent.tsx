@@ -1,23 +1,54 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {User} from "../../models/user.ts";
+import {toast} from "react-toastify";
+import {loginUser} from "../../reducers/UserSlice.ts";
 
-interface LoginPageProps {
-    onLogin?: () => void; // Optional callback for login handling
+interface RootState {
+    user: {
+        users: User[];
+        loggedInUser: User | null;
+    };
 }
 
-function LoginFormComponent({ onLogin }: LoginPageProps) {
+function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
+
+    const { users } = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSignIn = (event: React.FormEvent) => {
         event.preventDefault();
-        if (username && password) {
-            // Trigger login callback if provided
+        if (!username || !password) {
+            toast.error("Please fill out all required fields.", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+            return;
+        }
+
+        // Check if user exists
+        const foundUser = users.find(user => user.username === username && user.password === password);
+
+        if (foundUser) {
+            dispatch(loginUser(foundUser));
+
+            toast.success("Login successful!", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
             if (onLogin) onLogin();
-            // Navigate to the dashboard
             navigate("/");
+        } else {
+            toast.error("Invalid credentials!", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
         }
     };
 

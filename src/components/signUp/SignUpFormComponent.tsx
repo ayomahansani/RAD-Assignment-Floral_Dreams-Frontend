@@ -1,19 +1,56 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {User} from "../../models/user.ts";
+import {toast} from "react-toastify";
+import {registerUser} from "../../reducers/UserSlice.ts";
+
+interface RootState {
+    user: {
+        users: User[];
+    };
+}
 
 function SignUpFormComponent() {
 
+    const users = useSelector((state: RootState) => state.user.users);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSignUp = (event: React.FormEvent) => {
         event.preventDefault();
-        if (username && password) {
-            // Perform the sign-up logic here (e.g., API call to create a new user)
-            console.log("Sign-up successful:", { username, password });
-            navigate("/"); // Redirect to the dashboard or login page
+
+        if (!username || !password) {
+            toast.error("Please fill out all required fields.", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+            return;
         }
+
+        // Check if user already exists
+        if (users.some(user => user.username === username)) {
+            toast.error("Username already exists. Choose another.", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+            return;
+        }
+
+        const newUser = { username, password }; // ✅ Use plain object
+        dispatch(registerUser(newUser));
+
+        toast.success("Sign-up successful!", {
+            position: "bottom-right",
+            autoClose: 2000,
+        });
+
+        navigate("/login");
+
     };
 
     return (
