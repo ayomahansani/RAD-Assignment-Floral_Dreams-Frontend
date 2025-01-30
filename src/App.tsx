@@ -2,9 +2,9 @@ import "./App.css";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "./components/sidebar/RootLayout";
-import LoginPage from "./pages/LoginPage";
 import { ToastContainer } from "react-toastify";
 import SignUpPage from "./pages/SignUpPage.tsx";
+import LoginFormComponent from "./components/login/LoginFormComponent.tsx";
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
                 {/* Login Route */}
                 <Route
                     path="/login"
-                    element={<LoginPage onLogin={() => setIsAuthenticated(true)} />} // Pass onLogin callback
+                    element={<LoginFormComponent onLogin={() => setIsAuthenticated(true)} />} // Pass onLogin callback
 
                 />
                 <Route
