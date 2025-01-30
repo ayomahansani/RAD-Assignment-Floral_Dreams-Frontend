@@ -5,119 +5,73 @@ function SignUpFormComponent() {
 
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSignUp = (event: React.FormEvent) => {
         event.preventDefault();
-        if (username && email && password) {
+        if (username && password) {
             // Perform the sign-up logic here (e.g., API call to create a new user)
-            console.log("Sign-up successful:", { username, email, password });
+            console.log("Sign-up successful:", { username, password });
             navigate("/"); // Redirect to the dashboard or login page
         }
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex justify-center items-center min-h-screen relative">
+            {/* Background Image with Blur */}
             <div
-                className="flex justify-center items-center bg-green-500 px-6 py-12 rounded-lg"
-                style={{ width: "1000px", height: "700px" }}
-            >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full h-full">
-                    {/* Form Section */}
-                    <div className="flex flex-col justify-center items-center sm:mx-auto sm:w-full sm:max-w-sm">
-                        <div className="flex items-center justify-center space-x-2 mt-8">
-                            <h1 className="text-center text-3xl font-extrabold tracking-tight text-gray-900">
-                                Join Us!
-                            </h1>
+                className="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: "url('/flower6.jpg')",
+                    filter: "blur(3px)", // Apply the blur effect only to the background
+                    zIndex: -1 // Ensure the background is behind the content
+                }}
+            />
+            <div
+                className="bg-black bg-opacity-40 backdrop-blur-lg shadow-2xl shadow-black rounded-3xl flex overflow-hidden w-full max-w-4xl h-[600px]">
+                {/* Left Side - Form */}
+                <div className="w-1/2 p-10 flex flex-col justify-center">
+                    <h1 className="text-3xl font-extrabold text-red-300 text-center mb-6" style={{ fontFamily: 'Cinzel, serif' }}>FLORAL DREAMS</h1>
+                    <h2 className="text-2xl font-bold text-black text-center mb-6" style={{ fontFamily: 'Merriweather, serif' }}>Create Account!</h2>
+                    <form className="space-y-6" onSubmit={handleSignUp}>
+                        <div>
+                            <label className="block text-md font-medium text-red-200 mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Username</label>
+                            <input
+                                type="email"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-pink-100"
+                            />
                         </div>
-                        <h2 className="mt-2 mb-6 text-center text-2xl font-semibold tracking-tight text-gray-900">
-                            Create a new account
-                        </h2>
-
-                        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                            <form className="space-y-6" onSubmit={handleSignUp}>
-                                <div>
-                                    <label
-                                        htmlFor="username"
-                                        className="block text-sm font-medium text-gray-900"
-                                    >
-                                        Username
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            type="text"
-                                            name="username"
-                                            id="username"
-                                            value={username}
-                                            onChange={(e) => setUsername(e.target.value)}
-                                            required
-                                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:ring-indigo-600 focus:ring-2 focus:border-indigo-600 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="email"
-                                        className="block text-sm font-medium text-gray-900"
-                                    >
-                                        Email
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            required
-                                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:ring-indigo-600 focus:ring-2 focus:border-indigo-600 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="password"
-                                        className="block text-sm font-medium text-gray-900"
-                                    >
-                                        Password
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            required
-                                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:ring-indigo-600 focus:ring-2 focus:border-indigo-600 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <button
-                                        type="submit"
-                                        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-indigo-600 focus:ring-2 focus:ring-offset-2"
-                                    >
-                                        Sign Up
-                                    </button>
-
-                                </div>
-                            </form>
+                        <div>
+                            <label className="block text-md font-medium text-red-200 mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Password</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-pink-100 mb-6"
+                            />
                         </div>
-                    </div>
-
-                    {/* Image Section */}
-                    <div className="flex justify-center items-center h-full rounded-lg overflow-hidden">
-                        <img
-                            className="w-full h-full object-cover"
-                            src="/flower3.jpg"
-                            alt="Sign Up"
-                        />
-                    </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-red-300 text-lg font-extrabold text-black py-1 rounded-md hover:bg-black hover:text-pink-200 transition shadow-lg shadow-red-950"
+                            style={{ fontFamily: 'Poppins, sans-serif' }}
+                        >
+                            Sign Up
+                        </button>
+                        <p className="text-center text-md text-white mr-2"
+                           style={{ fontFamily: 'Montserrat, sans-serif' }}
+                        >
+                            Already have an account? <span className="ml-2 text-red-300 cursor-pointer hover:underline"
+                                                         onClick={() => navigate("/login")}>Sign In</span>
+                        </p>
+                    </form>
+                </div>
+                {/* Right Side - Image */}
+                <div className="w-1/2 hidden lg:flex items-center justify-center bg-pink-300 opacity-90">
+                    <img src="/flower6.jpg" alt="Flower shop" className="w-full h-full object-cover"/>
                 </div>
             </div>
         </div>
