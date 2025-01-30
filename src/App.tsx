@@ -3,8 +3,8 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "./components/sidebar/RootLayout";
 import { ToastContainer } from "react-toastify";
-import SignUpPage from "./pages/SignUpPage.tsx";
 import LoginFormComponent from "./components/login/LoginFormComponent.tsx";
+import SignUpFormComponent from "./components/signUp/SignUpFormComponent.tsx";
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
                 />
                 <Route
                     path="/signup"
-                    element={<SignUpPage />} // Add route for sign-up page
+                    element={<SignUpFormComponent />} // Add route for sign-up page
                 />
 
                 {/* Protected Routes */}
