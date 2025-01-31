@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import {forwardRef, useImperativeHandle, useRef, useState} from "react";
-import { addFlower, updateFlower } from "../../reducers/FlowerSlice.ts";
+import { saveFlower, updateFlower } from "../../reducers/FlowerSlice.ts";
 import { Flower } from "../../models/flower.ts";
 import {toast} from "react-toastify";
+import {AppDispatch} from "../../store/Store.ts";
 
 interface RootState {
     flower: Flower[];
@@ -10,7 +11,7 @@ interface RootState {
 
 const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => void }, ref) => {
     const flowers = useSelector((store: RootState) => store.flower);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [flowerCode, setFlowerCode] = useState<number | undefined>();
     const [flowerName, setFlowerName] = useState<string>("");
@@ -58,7 +59,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
 
         switch (type) {
             case "ADD_FLOWER":
-                dispatch(addFlower(newFlower));
+                dispatch(saveFlower(newFlower));
                 toast.success("Flower saved successfully!", {
                     position: "bottom-right",
                     autoClose: 2000,

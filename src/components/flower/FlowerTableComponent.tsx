@@ -4,10 +4,11 @@ import {useState} from "react";
 import {deleteFlower} from "../../reducers/FlowerSlice.ts";
 import ConfirmationModal from "../modals/ConfirmationModal.tsx";
 import {toast} from "react-toastify";
+import {AppDispatch} from "../../store/Store.ts";
 
 
 const FlowerTableComponent = ({flowers = [], onEditFlower,}: { flowers?: Flower[]; onEditFlower: (flower: Flower) => void; }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     // Modal state
     const [isModalOpen, setModalOpen] = useState(false);

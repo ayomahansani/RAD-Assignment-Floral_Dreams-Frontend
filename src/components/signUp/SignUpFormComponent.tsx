@@ -1,58 +1,47 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {User} from "../../models/user.ts";
 import {toast} from "react-toastify";
 import {registerUser} from "../../reducers/UserSlice.ts";
-
-interface RootState {
-    user: {
-        users: User[];
-    };
-}
+import {AppDispatch} from "../../store/Store.ts";
+import {User} from "../../models/user.ts";
 
 function SignUpFormComponent() {
 
-    const users = useSelector((state: RootState) => state.user.users);
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
+    const { isAuthenticated, error } = useSelector((state) => state.user);
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSignUp = (event: React.FormEvent) => {
+    useEffect(() => {
+        if (error) {
+            toast.error(error, { position: "bottom-right", autoClose: 2000 });
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            toast.success("Sign-up successful!", { position: "bottom-right", autoClose: 2000 });
+            navigate("/login");
+        }
+    }, [isAuthenticated, navigate]);
+
+    const handleSignUp = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (!username || !password) {
-            toast.error("Please fill out all required fields.", {
-                position: "bottom-right",
-                autoClose: 2000,
-            });
+        if (!firstName || !lastName || !username || !password) {
+            toast.error("Please fill out all required fields.", { position: "bottom-right", autoClose: 2000 });
             return;
         }
 
-        // Check if user already exists
-        if (users.some(user => user.username === username)) {
-            toast.error("Username already exists. Choose another.", {
-                position: "bottom-right",
-                autoClose: 2000,
-            });
-            return;
-        }
-
-        const newUser = { username, password }; // ✅ Use plain object
+        const newUser: User = { firstName, lastName, username, password };
         dispatch(registerUser(newUser));
-
-        toast.success("Sign-up successful!", {
-            position: "bottom-right",
-            autoClose: 2000,
-        });
-
-        navigate("/login");
-
     };
-
     return (
         <div className="flex justify-center items-center min-h-screen relative">
             {/* Background Image with Blur */}
@@ -71,6 +60,30 @@ function SignUpFormComponent() {
                     <h1 className="text-3xl font-extrabold text-red-300 text-center mb-6" style={{ fontFamily: 'Cinzel, serif' }}>FLORAL DREAMS</h1>
                     <h2 className="text-2xl font-bold text-black text-center mb-6" style={{ fontFamily: 'Merriweather, serif' }}>Create Account!</h2>
                     <form className="space-y-6" onSubmit={handleSignUp}>
+
+                        {/* First Name & Last Name - Side by Side */}
+                        <div className="flex gap-4">
+                            <div className="w-1/2">
+                                <label className="block text-md font-medium text-red-200 mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>First Name</label>
+                                <input
+                                    type="text"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    required
+                                    className="w-full p-1 rounded focus:outline-none focus:bg-red-200 shadow-lg bg-red-200"
+                                />
+                            </div>
+                            <div className="w-1/2">
+                                <label className="block text-md font-medium text-red-200 mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Last Name</label>
+                                <input
+                                    type="text"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    required
+                                    className="w-full p-1 rounded focus:outline-none focus:bg-red-200 shadow-lg bg-red-200"
+                                />
+                            </div>
+                        </div>
                         <div>
                             <label className="block text-md font-medium text-red-200 mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Username</label>
                             <input
@@ -78,7 +91,7 @@ function SignUpFormComponent() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
-                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-red-200"
+                                className="w-full p-1 rounded focus:outline-none focus:bg-red-200 shadow-lg bg-red-200"
                             />
                         </div>
                         <div>
@@ -88,7 +101,7 @@ function SignUpFormComponent() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full p-1 border rounded focus:outline-none shadow-lg bg-red-200 mb-6"
+                                className="w-full p-1 rounded focus:outline-none focus:bg-red-200 shadow-lg bg-red-200 mb-6"
                             />
                         </div>
                         <button

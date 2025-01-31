@@ -3,8 +3,7 @@ import FlowerSlice from "../reducers/FlowerSlice.ts";
 import CustomerSlice from "../reducers/CustomerSlice.ts";
 import UserSlice from "../reducers/UserSlice.ts";
 
-
-const store = configureStore({
+export const store = configureStore({
     reducer: {
         flower: FlowerSlice,
         customer: CustomerSlice,
@@ -12,4 +11,4 @@ const store = configureStore({
     }
 });
 
-export default store;
+export type AppDispatch = typeof store.dispatch;

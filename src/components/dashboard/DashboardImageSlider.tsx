@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 const DashboardImageSlider = () => {
     const flowerImages = [
-        "/flower1.jpg", // Replace with the actual image path
-        "/flower2.jpg", // Replace with the actual image path
-        "/flower3.jpg", // Replace with the actual image path
+        "/flower1.jpg",
+        "/flower2.jpg",
+        "/flower3.jpg",
         "/flower4.jpg",
         "/flower5.jpg",
     ];

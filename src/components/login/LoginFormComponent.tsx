@@ -1,28 +1,21 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {User} from "../../models/user.ts";
 import {toast} from "react-toastify";
 import {loginUser} from "../../reducers/UserSlice.ts";
-
-interface RootState {
-    user: {
-        users: User[];
-        loggedInUser: User | null;
-    };
-}
+import {AppDispatch} from "../../store/Store.ts";
 
 function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
 
-    const { users } = useSelector((state: RootState) => state.user);
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
+    const { isAuthenticated, loading, error } = useSelector((state) => state.user);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSignIn = (event: React.FormEvent) => {
+    const handleSignIn = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!username || !password) {
             toast.error("Please fill out all required fields.", {
@@ -32,25 +25,30 @@ function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
             return;
         }
 
-        // Check if user exists
-        const foundUser = users.find(user => user.username === username && user.password === password);
+        try {
+            const response = await dispatch(loginUser({ username, password })).unwrap();
+            console.log("Login successful:", response);
+        } catch (err) {
+            console.error("Login failed:", err);
+        }
 
-        if (foundUser) {
-            dispatch(loginUser(foundUser));
+    };
 
-            toast.success("Login successful!", {
-                position: "bottom-right",
-                autoClose: 2000,
-            });
+    // Handle login success after Redux state updates
+    useEffect(() => {
+        if (isAuthenticated) {
+            toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
             if (onLogin) onLogin();
             navigate("/");
-        } else {
-            toast.error("Invalid credentials!", {
-                position: "bottom-right",
-                autoClose: 2000,
-            });
         }
-    };
+    }, [isAuthenticated, navigate, onLogin]);
+
+    // Show error messages if login fails
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+    }, [error]);
 
     return (
         <div className="flex justify-center items-center min-h-screen relative">
@@ -77,7 +75,7 @@ function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
-                                className="w-full p-1 rounded focus:outline-none shadow-lg bg-pink-200"
+                                className="w-full p-1 rounded focus:outline-none focus:bg-pink-200 shadow-lg bg-pink-200"
                             />
                         </div>
                         <div>
@@ -87,15 +85,16 @@ function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full p-1 rounded focus:outline-none shadow-lg bg-pink-200 mb-6"
+                                className="w-full p-1 rounded focus:outline-none focus:bg-pink-200 shadow-lg bg-pink-200 mb-6"
                             />
                         </div>
                         <button
                             type="submit"
                             className="w-full bg-pink-300 text-lg font-extrabold text-black py-1 rounded-md hover:bg-black hover:text-pink-200 transition shadow-lg shadow-pink-950"
                             style={{ fontFamily: 'Poppins, sans-serif' }}
+                            disabled={loading}
                         >
-                            Sign In
+                            {loading ? "Signing In..." : "Sign In"}
                         </button>
                         <p className="text-center text-md text-white mr-2"
                            style={{ fontFamily: 'Montserrat, sans-serif' }}

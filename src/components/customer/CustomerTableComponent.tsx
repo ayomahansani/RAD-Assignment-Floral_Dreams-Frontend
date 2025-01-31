@@ -4,11 +4,12 @@ import {useState} from "react";
 import {toast} from "react-toastify";
 import {deleteCustomer} from "../../reducers/CustomerSlice.ts";
 import ConfirmationModal from "../modals/ConfirmationModal.tsx";
+import {AppDispatch} from "../../store/Store.ts";
 
 
 const CustomerTableComponent = ({customers = [], onEditCustomer}: {customers?: Customer[]; onEditCustomer: (customer: Customer) => void}) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     // Modal state
     const [isModalOpen, setModalOpen] = useState(false);

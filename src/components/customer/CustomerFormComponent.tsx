@@ -2,7 +2,8 @@ import {Customer} from "../../models/customer.ts";
 import {forwardRef, useImperativeHandle, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {addCustomer, updateCustomer} from "../../reducers/CustomerSlice.ts";
+import {saveCustomer, updateCustomer} from "../../reducers/CustomerSlice.ts";
+import {AppDispatch} from "../../store/Store.ts";
 
 interface RootState {
     customer: Customer[];
@@ -10,7 +11,7 @@ interface RootState {
 
 const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => void }, ref) => {
     const customers = useSelector((store: RootState) => store.customer);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [customerId, setCustomerId] = useState<number | undefined>();
     const [customerFirstName, setCustomerFirstName] = useState<string>("");
@@ -56,7 +57,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
 
         switch (type) {
             case "ADD_CUSTOMER":
-                dispatch(addCustomer(newCustomer));
+                dispatch(saveCustomer(newCustomer));
                 toast.success("Customer saved successfully!", {
                     position: "bottom-right",
                     autoClose: 2000,

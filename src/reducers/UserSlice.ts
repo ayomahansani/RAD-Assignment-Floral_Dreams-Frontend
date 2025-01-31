@@ -1,45 +1,100 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { api } from "../services/apiService.ts"; // Import the Axios instance
 import { User } from "../models/user.ts";
 
 interface UserState {
-    users: User[];
-    loggedInUser: User | null;
+    jwt_token: string | null;
+    refresh_token: string | null;
+    username: string | null;
+    isAuthenticated: boolean;
+    loading: boolean;
+    error: string | null;
 }
 
 const initialState: UserState = {
-    users: [],
-    loggedInUser: null,
+    jwt_token: null,
+    refresh_token: null,
+    username: null,
+    isAuthenticated: false,
+    loading: false,
+    error: null,
 };
 
+// ** Register User **
+export const registerUser = createAsyncThunk(
+    "user/register",
+    async (user: User, { rejectWithValue }) => {
+        try {
+            const response = await api.post("/auth/register", user, { withCredentials: true });
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data?.message || "Registration failed");
+        }
+    }
+);
+
+// ** Login User **
+export const loginUser = createAsyncThunk(
+    "user/login",
+    async (user: User, { rejectWithValue }) => {
+        try {
+            const response = await api.post("/auth/login", user, { withCredentials: true });
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data?.message || "Login failed");
+        }
+    }
+);
+
 const userSlice = createSlice({
-    name: "user",
+    name: "userReducer",
     initialState,
     reducers: {
-        registerUser: (state, action: PayloadAction<{ username: string; password: string }>) => {
-            const { username, password } = action.payload;
-
-            // Check if user already exists
-            const existingUser = state.users.find(user => user.username === username);
-            if (!existingUser) {
-                state.users.push({ username, password }); // ✅ Store as plain object
-            } else {
-                console.warn("Username already taken!");
-            }
+        logOutUser(state) {
+            state.isAuthenticated = false;
+            state.jwt_token = null;
+            state.refresh_token = null;
+            state.username = null;
+            localStorage.removeItem("jwt_token");
+            localStorage.removeItem("refresh_token");
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(registerUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state, action) => {
+                state.loading = false;
+                console.log("User Registered Successfully", action.payload);
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.jwt_token = action.payload.accessToken;
+                state.refresh_token = action.payload.refreshToken;
+                state.isAuthenticated = true;
+                state.username = action.payload.username;
 
-        loginUser: (state, action: PayloadAction<{ username: string; password: string }>) => {
-            const { username, password } = action.payload;
-
-            const foundUser = state.users.find(user => user.username === username && user.password === password);
-            if (foundUser) {
-                state.loggedInUser = { ...foundUser }; // ✅ Store as a plain object
-            } else {
-                console.warn("Invalid credentials!");
-            }
-        }
-
-    }
+                // Save tokens to local storage
+                localStorage.setItem("jwt_token", action.payload.accessToken);
+                localStorage.setItem("refresh_token", action.payload.refreshToken);
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+                state.isAuthenticated = false;
+            });
+    },
 });
 
-export const { registerUser, loginUser } = userSlice.actions;
+export const { logOutUser } = userSlice.actions;
 export default userSlice.reducer;
