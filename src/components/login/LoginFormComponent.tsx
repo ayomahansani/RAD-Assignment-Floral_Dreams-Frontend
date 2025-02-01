@@ -54,7 +54,10 @@ function LoginFormComponent() {
     // Show error messages if login fails
     useEffect(() => {
         if (error) {
-            toast.error(error);
+            toast.error(error, {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
         }
     }, [error]);
 

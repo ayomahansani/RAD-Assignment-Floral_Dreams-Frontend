@@ -20,7 +20,10 @@ function SignUpFormComponent() {
 
     useEffect(() => {
         if (error) {
-            toast.error(error, { position: "bottom-right", autoClose: 2000 });
+            toast.error(error, {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
         }
     }, [error]);
 
