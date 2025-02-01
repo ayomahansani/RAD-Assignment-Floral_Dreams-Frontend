@@ -1,6 +1,6 @@
 import "./App.css";
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // ✅ Use Redux state
 import RootLayout from "./components/sidebar/RootLayout";
 import { ToastContainer } from "react-toastify";
 import LoginFormComponent from "./components/login/LoginFormComponent.tsx";
@@ -8,23 +8,15 @@ import SignUpFormComponent from "./components/signUp/SignUpFormComponent.tsx";
 
 function App() {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // ✅ Get from Redux
 
     console.log("App Component - isAuthenticated:", isAuthenticated);
 
     return (
         <Router>
             <Routes>
-                {/* Login Route */}
-                <Route
-                    path="/login"
-                    element={<LoginFormComponent onLogin={() => setIsAuthenticated(true)} />} // Pass onLogin callback
-
-                />
-                <Route
-                    path="/signup"
-                    element={<SignUpFormComponent />} // Add route for sign-up page
-                />
+                <Route path="/login" element={<LoginFormComponent />} />
+                <Route path="/signup" element={<SignUpFormComponent />} />
 
                 {/* Protected Routes */}
                 <Route
@@ -33,14 +25,14 @@ function App() {
                         isAuthenticated ? (
                             <RootLayout />
                         ) : (
-                            <Navigate to="/login" replace /> // Redirect to login if not authenticated
+                            <Navigate to="/login" replace />
                         )
                     }
                 />
             </Routes>
-            <ToastContainer /> {/* For alerts */}
+            <ToastContainer />
         </Router>
     );
 }
 
-export default App
+export default App;

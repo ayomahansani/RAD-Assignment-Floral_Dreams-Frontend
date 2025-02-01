@@ -5,12 +5,13 @@ import {toast} from "react-toastify";
 import {loginUser} from "../../reducers/UserSlice.ts";
 import {AppDispatch} from "../../store/Store.ts";
 
-function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
+function LoginFormComponent() {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    const { isAuthenticated, loading, error } = useSelector((state) => state.user);
+
+    const { isAuthenticated, error } = useSelector((state) => state.user);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -35,13 +36,20 @@ function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
     };
 
     // Handle login success after Redux state updates
-    useEffect(() => {
+    /*useEffect(() => {
         if (isAuthenticated) {
             toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
             if (onLogin) onLogin();
             navigate("/");
         }
-    }, [isAuthenticated, navigate, onLogin]);
+    }, [isAuthenticated, navigate, onLogin]);*/
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
+            navigate("/");
+        }
+    }, [isAuthenticated, navigate]);
 
     // Show error messages if login fails
     useEffect(() => {
@@ -92,9 +100,8 @@ function LoginFormComponent({ onLogin }: { onLogin?: () => void }) {
                             type="submit"
                             className="w-full bg-pink-300 text-lg font-extrabold text-black py-1 rounded-md hover:bg-black hover:text-pink-200 transition shadow-lg shadow-pink-950"
                             style={{ fontFamily: 'Poppins, sans-serif' }}
-                            disabled={loading}
                         >
-                            {loading ? "Signing In..." : "Sign In"}
+                            Sign In
                         </button>
                         <p className="text-center text-md text-white mr-2"
                            style={{ fontFamily: 'Montserrat, sans-serif' }}
