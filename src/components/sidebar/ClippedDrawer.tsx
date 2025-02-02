@@ -26,6 +26,9 @@ import FlowerPage from "../../pages/FlowerPage.tsx";
 import CustomerPage from "../../pages/CustomerPage.tsx";
 import PlaceOrderPage from "../../pages/PlaceOrderPage.tsx";
 import OrderDetailsPage from "../../pages/OrderDetailsPage.tsx";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../store/Store.ts";
+import {logOutUser} from "../../reducers/UserSlice.ts";
 
 const drawerWidth = 230;
 
@@ -34,6 +37,7 @@ export default function HoverableSidebar() {
     const [currentTime, setCurrentTime] = useState(new Date());
     const navigate = useNavigate(); // Hook for navigation
     const location = useLocation();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -44,7 +48,7 @@ export default function HoverableSidebar() {
     }, []);
 
     const handleLogout = () => {
-        // Perform any logout logic here (e.g., clear tokens, session, etc.)
+        dispatch(logOutUser());
         console.log("User logged out");
 
         // Navigate to the login page
