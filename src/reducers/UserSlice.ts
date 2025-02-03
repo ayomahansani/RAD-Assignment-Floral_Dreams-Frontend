@@ -47,7 +47,7 @@ export const loginUser = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-    name: "userReducer",
+    name: "user",
     initialState,
     reducers: {
         logOutUser(state) {
@@ -58,6 +58,9 @@ const userSlice = createSlice({
             localStorage.removeItem("jwt_token");
             localStorage.removeItem("refresh_token");
         },
+        clearError(state) {
+            state.error = null;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -96,5 +99,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { logOutUser } = userSlice.actions;
+export const { logOutUser, clearError } = userSlice.actions;
 export default userSlice.reducer;

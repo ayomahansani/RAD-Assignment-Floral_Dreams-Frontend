@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {registerUser} from "../../reducers/UserSlice.ts";
+import {clearError, registerUser} from "../../reducers/UserSlice.ts";
 import {AppDispatch} from "../../store/Store.ts";
 import {User} from "../../models/user.ts";
 
@@ -19,6 +19,10 @@ function SignUpFormComponent() {
     const [password, setPassword] = useState("");
 
     useEffect(() => {
+        dispatch(clearError()); // Clear error when navigating to sign up
+    }, [dispatch]);
+
+    useEffect(() => {
         if (error) {
             toast.error(error, {
                 position: "bottom-right",
@@ -33,6 +37,7 @@ function SignUpFormComponent() {
             navigate("/login");
         }
     }, [isAuthenticated, navigate]);
+
 
     const handleSignUp = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -117,8 +122,12 @@ function SignUpFormComponent() {
                         <p className="text-center text-md text-white mr-2"
                            style={{ fontFamily: 'Montserrat, sans-serif' }}
                         >
-                            Already have an account? <span className="ml-2 text-red-300 cursor-pointer hover:underline"
-                                                         onClick={() => navigate("/login")}>Sign In</span>
+                            Already have an account?
+                            <span className="ml-2 text-red-300 cursor-pointer hover:underline"
+                                  onClick={() => {
+                                      dispatch(clearError());
+                                      navigate("/login");
+                                  }}>Sign In</span>
                         </p>
                     </form>
                 </div>

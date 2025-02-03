@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {loginUser} from "../../reducers/UserSlice.ts";
+import {clearError, loginUser} from "../../reducers/UserSlice.ts";
 import {AppDispatch} from "../../store/Store.ts";
 
 function LoginFormComponent() {
@@ -15,6 +15,27 @@ function LoginFormComponent() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        dispatch(clearError()); // Clear error when navigating to login
+    }, [dispatch]);
+
+    // Show error messages if login fails
+    useEffect(() => {
+        if (error) {
+            toast.error(error, {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
+            navigate("/");
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleSignIn = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -34,32 +55,6 @@ function LoginFormComponent() {
         }
 
     };
-
-    // Handle login success after Redux state updates
-    /*useEffect(() => {
-        if (isAuthenticated) {
-            toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
-            if (onLogin) onLogin();
-            navigate("/");
-        }
-    }, [isAuthenticated, navigate, onLogin]);*/
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
-            navigate("/");
-        }
-    }, [isAuthenticated, navigate]);
-
-    // Show error messages if login fails
-    useEffect(() => {
-        if (error) {
-            toast.error(error, {
-                position: "bottom-right",
-                autoClose: 2000,
-            });
-        }
-    }, [error]);
 
     return (
         <div className="flex justify-center items-center min-h-screen relative">
@@ -109,8 +104,14 @@ function LoginFormComponent() {
                         <p className="text-center text-md text-white mr-2"
                            style={{ fontFamily: 'Montserrat, sans-serif' }}
                         >
-                            Don't have an account? <span className="ml-2 text-pink-300 cursor-pointer hover:underline"
-                                                         onClick={() => navigate("/signup")}>Sign Up</span>
+                            Don't have an account?
+                            <span className="ml-2 text-pink-300 cursor-pointer hover:underline"
+                                  onClick={() => {
+                                      dispatch(clearError());
+                                      navigate("/signup");
+                                  }}>Sign Up
+
+                            </span>
                         </p>
                     </form>
                 </div>
