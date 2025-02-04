@@ -34,7 +34,7 @@ function SignUpFormComponent() {
     useEffect(() => {
         if (isAuthenticated) {
             toast.success("Sign-up successful!", { position: "bottom-right", autoClose: 2000 });
-            navigate("/login");
+            navigate("/");
         }
     }, [isAuthenticated, navigate]);
 
