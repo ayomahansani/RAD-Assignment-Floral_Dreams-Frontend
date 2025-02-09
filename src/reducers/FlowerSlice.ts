@@ -4,6 +4,7 @@ import {api} from "../services/apiService.ts";
 
 const initialState: Flower[] = [];
 
+// save flower
 export const saveFlower = createAsyncThunk(
     'flower/saveFlower',
     async (flowerData: FormData, { rejectWithValue }) => {
@@ -21,24 +22,7 @@ export const saveFlower = createAsyncThunk(
     }
 );
 
-/*export const updateFlower = createAsyncThunk(
-    'flower/updateFlower',
-    async (formData: FormData, { rejectWithValue }) => {
-        try {
-            const response = await api.put(`/flower/update/${formData.get("flower_code")}`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            if (response.status !== 201 && response.status !== 200) {
-                throw new Error('Failed to update flower');
-            }
-            return response.data;
-        } catch (error: any) {
-            return rejectWithValue(error.response ? error.response.data : error.message);
-        }
-    }
-);*/
-
+// update flower
 export const updateFlower = createAsyncThunk(
     'flower/updateFlower',
     async (formData: FormData, { rejectWithValue }) => {
@@ -63,7 +47,7 @@ export const updateFlower = createAsyncThunk(
     }
 );
 
-
+// get all flowers
 export const viewFlowers = createAsyncThunk(
     "flower/viewFlowers",
     async (_, { rejectWithValue }) => {
@@ -85,7 +69,7 @@ export const viewFlowers = createAsyncThunk(
     }
 );
 
-
+// delete flower
 export const deleteFlower = createAsyncThunk(
     "flower/deleteFlower",
     async (flowerCode: number, { rejectWithValue }) => {
