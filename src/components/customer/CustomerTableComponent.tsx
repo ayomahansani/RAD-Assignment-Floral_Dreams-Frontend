@@ -22,7 +22,7 @@ const CustomerTableComponent = ({customers = [], onEditCustomer}: {customers?: C
 
     const handleConfirmDelete = () => {
         if (customerToDelete) {
-            dispatch(deleteCustomer({ customer_id: customerToDelete }));
+            dispatch(deleteCustomer(customerToDelete));
             toast.success("Customer deleted successfully!", {
                 position: "bottom-right",
                 autoClose: 2000,

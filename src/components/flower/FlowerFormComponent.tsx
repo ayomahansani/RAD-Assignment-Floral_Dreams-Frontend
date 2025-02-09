@@ -47,19 +47,21 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
             return;
         }
 
-        const newFlower: Flower = {
-            flower_code: flowerCode,
-            flower_name: flowerName,
-            flower_image: previewFlowerImage || "",
-            flower_size: flowerSize,
-            flower_colour: flowerColour,
-            flower_unit_price: flowerUnitPrice,
-            flower_qty_on_hand: flowerQtyOnHand,
-        };
+        const formData = new FormData();
+        formData.append("flower_code", flowerCode.toString());
+        formData.append("flower_name", flowerName);
+        formData.append("flower_size", flowerSize);
+        formData.append("flower_colour", flowerColour);
+        formData.append("flower_unit_price", flowerUnitPrice.toString());
+        formData.append("flower_qty_on_hand", flowerQtyOnHand.toString());
+
+        if (fileInput1Ref.current?.files?.[0]) {
+            formData.append("flower_image", fileInput1Ref.current.files[0]);
+        }
 
         switch (type) {
             case "ADD_FLOWER":
-                dispatch(saveFlower(newFlower));
+                dispatch(saveFlower(formData));
                 toast.success("Flower saved successfully!", {
                     position: "bottom-right",
                     autoClose: 2000,
@@ -68,7 +70,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                 onCloseModal(); // Close the modal after saving
                 break;
             case "UPDATE_FLOWER":
-                dispatch(updateFlower(newFlower));
+                dispatch(updateFlower(formData));
                 toast.success("Flower updated successfully!", {
                     position: "bottom-right",
                     autoClose: 2000,
@@ -82,10 +84,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
         }
     };
 
-    const handleImageChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-        setPreview: React.Dispatch<React.SetStateAction<string | null>>
-    ) => {
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>, setPreview: React.Dispatch<React.SetStateAction<string | null>>) => {
         const flower = e.target.files?.[0];
         if (flower) {
             setPreview(URL.createObjectURL(flower));
@@ -250,7 +249,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             letterSpacing: "0.5px", // Slight letter spacing for elegance
                         }}
                     >
-                    {editMode ? "Update Flower" : "Add Flower"}
+                        {editMode ? "Update Flower" : "Add Flower"}
                     </button>
                     <button
                         type="button"
@@ -270,3 +269,4 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
 });
 
 export default FlowerFormComponent;
+

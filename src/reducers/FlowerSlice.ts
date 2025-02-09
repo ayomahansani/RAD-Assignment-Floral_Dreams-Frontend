@@ -6,13 +6,15 @@ const initialState: Flower[] = [];
 
 export const saveFlower = createAsyncThunk(
     'flower/saveFlower',
-    async (flower: Flower, { rejectWithValue }) => {
+    async (flowerData: FormData, { rejectWithValue }) => {
         try {
-            const response = await api.post('/flower/add', flower);
+            const response = await api.post('/flower/add', flowerData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
             if (response.status !== 201 && response.status !== 200) {
                 throw new Error('Failed to save flower');
             }
-            return response.data; // Ensure data is returned correctly
+            return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response ? error.response.data : error.message);
         }
@@ -20,22 +22,34 @@ export const saveFlower = createAsyncThunk(
 );
 
 export const viewFlowers = createAsyncThunk(
-    'flower/viewFlowers',
+    "flower/viewFlowers",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await api.get('/flower/view');
+            const response = await api.get("/flower/view", {
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (response.status !== 200) {
+                throw new Error("Failed to fetch flowers");
+            }
+
             return response.data; // Ensure data is returned correctly
         } catch (error: any) {
-            return rejectWithValue(error.response ? error.response.data : error.message);
+            return rejectWithValue(
+                error.response ? error.response.data : error.message
+            );
         }
     }
 );
 
 export const updateFlower = createAsyncThunk(
     'flower/updateFlower',
-    async (flower: Flower, { rejectWithValue }) => {
+    async (formData: FormData, { rejectWithValue }) => {
         try {
-            const response = await api.put(`/flower/update/${flower.flower_code}`, flower);
+            const response = await api.put(`/flower/update/${formData.get("flower_code")}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
             if (response.status !== 201 && response.status !== 200) {
                 throw new Error('Failed to update flower');
             }
@@ -46,15 +60,20 @@ export const updateFlower = createAsyncThunk(
     }
 );
 
+
 export const deleteFlower = createAsyncThunk(
     "flower/deleteFlower",
     async (flowerCode: number, { rejectWithValue }) => {
         try {
-            const response = await api.delete(`/flower/delete/${flowerCode}`);
-            if (response.status !== 200) {
+            const response = await api.delete(`/flower/delete/${flowerCode}`, {
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (response.status !== 200 && response.status !== 204) {
                 throw new Error("Failed to delete flower");
             }
-            return flowerCode; // Return the ID of the deleted customer
+
+            return flowerCode; // Return the deleted flower's ID
         } catch (error: any) {
             return rejectWithValue(
                 error.response ? error.response.data : error.message

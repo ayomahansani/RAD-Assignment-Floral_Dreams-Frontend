@@ -1,27 +1,35 @@
 import {Flower} from "../../models/flower.ts";
-import {useDispatch} from "react-redux";
-import {useState} from "react";
-import {deleteFlower} from "../../reducers/FlowerSlice.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {deleteFlower, viewFlowers} from "../../reducers/FlowerSlice.ts";
 import ConfirmationModal from "../modals/ConfirmationModal.tsx";
 import {toast} from "react-toastify";
 import {AppDispatch} from "../../store/Store.ts";
 
+interface RootState {
+    flower: Flower[];
+}
 
-const FlowerTableComponent = ({flowers = [], onEditFlower,}: { flowers?: Flower[]; onEditFlower: (flower: Flower) => void; }) => {
+const FlowerTableComponent = ({onEditFlower,}: { onEditFlower: (flower: Flower) => void; }) => {
     const dispatch = useDispatch<AppDispatch>();
+    const flowers = useSelector((store: RootState) => store.flower);
+
+    useEffect(() => {
+        dispatch(viewFlowers());
+    }, [dispatch]);
 
     // Modal state
     const [isModalOpen, setModalOpen] = useState(false);
     const [flowerToDelete, setFlowerToDelete] = useState<number | null>(null);
 
-    const openDeleteModal = (fieldCode: number) => {
-        setFlowerToDelete(fieldCode);
+    const openDeleteModal = (flowerCode: number) => {
+        setFlowerToDelete(flowerCode);
         setModalOpen(true);
     };
 
     const handleConfirmDelete = () => {
         if (flowerToDelete) {
-            dispatch(deleteFlower({ flower_code: flowerToDelete }));
+            dispatch(deleteFlower(flowerToDelete));
             toast.success("Flower deleted successfully!", {
                 position: "bottom-right",
                 autoClose: 2000,
