@@ -21,6 +21,49 @@ export const saveFlower = createAsyncThunk(
     }
 );
 
+/*export const updateFlower = createAsyncThunk(
+    'flower/updateFlower',
+    async (formData: FormData, { rejectWithValue }) => {
+        try {
+            const response = await api.put(`/flower/update/${formData.get("flower_code")}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            if (response.status !== 201 && response.status !== 200) {
+                throw new Error('Failed to update flower');
+            }
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response ? error.response.data : error.message);
+        }
+    }
+);*/
+
+export const updateFlower = createAsyncThunk(
+    'flower/updateFlower',
+    async (formData: FormData, { rejectWithValue }) => {
+        try {
+            const flowerCode = formData.get("flower_code") as string; // Explicitly cast to string
+
+            if (!flowerCode) {
+                throw new Error("Flower code is required for update.");
+            }
+
+            const response = await api.put(`/flower/update/${flowerCode}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error('Failed to update flower');
+            }
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response ? error.response.data : error.message);
+        }
+    }
+);
+
+
 export const viewFlowers = createAsyncThunk(
     "flower/viewFlowers",
     async (_, { rejectWithValue }) => {
@@ -38,24 +81,6 @@ export const viewFlowers = createAsyncThunk(
             return rejectWithValue(
                 error.response ? error.response.data : error.message
             );
-        }
-    }
-);
-
-export const updateFlower = createAsyncThunk(
-    'flower/updateFlower',
-    async (formData: FormData, { rejectWithValue }) => {
-        try {
-            const response = await api.put(`/flower/update/${formData.get("flower_code")}`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            if (response.status !== 201 && response.status !== 200) {
-                throw new Error('Failed to update flower');
-            }
-            return response.data;
-        } catch (error: any) {
-            return rejectWithValue(error.response ? error.response.data : error.message);
         }
     }
 );

@@ -38,7 +38,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
         },
     }));
 
-    const handleFlowerOperation = (type: "ADD_FLOWER" | "UPDATE_FLOWER") => {
+    const handleFlowerOperation = async (type: "ADD_FLOWER" | "UPDATE_FLOWER") => {
         if (!flowerCode || !flowerName || !flowerSize || !flowerColour || !flowerUnitPrice || !flowerQtyOnHand) {
             toast.error("Please fill out all required fields.", {
                 position: "bottom-right",
@@ -61,7 +61,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
 
         switch (type) {
             case "ADD_FLOWER":
-                dispatch(saveFlower(formData));
+                await dispatch(saveFlower(formData)).unwrap();
                 toast.success("Flower saved successfully!", {
                     position: "bottom-right",
                     autoClose: 2000,
@@ -70,7 +70,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                 onCloseModal(); // Close the modal after saving
                 break;
             case "UPDATE_FLOWER":
-                dispatch(updateFlower(formData));
+                await dispatch(updateFlower(formData)).unwrap();
                 toast.success("Flower updated successfully!", {
                     position: "bottom-right",
                     autoClose: 2000,
