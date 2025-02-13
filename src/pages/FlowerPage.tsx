@@ -33,8 +33,26 @@ const FlowerPage = () => {
 
     return (
         <div className="relative p-3">
-            {/* Add New Button */}
-            <div className="mb-3 text-right">
+            {/* Search and Add New Buttons */}
+            <div className="mb-3 flex items-center justify-between">
+                {/* Search Field */}
+                <div className="flex items-center">
+                    <input
+                        type="text"
+                        /*value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}*/
+                        placeholder="Enter code to search..."
+                        className="w-full max-w-xs px-10 py-1 border-2 border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#432e32]"
+                    />
+                    <button
+                        /*onClick={handleSearch}*/
+                        className="ml-2 bg-[#ccb7b7] text-black font-extrabold px-6 py-1 rounded-sm shadow-lg shadow-[#432e32] transition-colors hover:bg-gray-100"
+                    >
+                        Search
+                    </button>
+                </div>
+
+                {/* Add New Button */}
                 <button
                     onClick={openModal}
                     className="bg-yellow-500 text-black font-extrabold px-4 py-2 rounded-md shadow-lg shadow-[#432e32] transition-colors hover:bg-gray-100"
