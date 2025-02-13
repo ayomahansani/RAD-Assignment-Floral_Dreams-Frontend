@@ -116,7 +116,10 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                 setPreviewFlowerImage(foundFlower.flower_image || null);
                 setEditMode(true);
             } else {
-                alert("Flower not found.");
+                toast.error("Flower not found!", {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                });
             }
         }
     };

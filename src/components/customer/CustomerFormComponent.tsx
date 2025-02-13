@@ -103,7 +103,10 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                 setGender(foundCustomer.gender);
                 setEditMode(true);
             } else {
-                alert("Customer not found.");
+                toast.error("Customer not found!", {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                });
             }
         }
     };
