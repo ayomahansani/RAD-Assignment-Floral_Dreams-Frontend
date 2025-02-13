@@ -1,12 +1,10 @@
 import FlowerFormComponent from "../components/flower/FlowerFormComponent.tsx";
 import FlowerTableComponent from "../components/flower/FlowerTableComponent.tsx";
 import {useRef, useState} from "react";
-import {useSelector} from "react-redux";
 import {Flower} from "../models/flower.ts";
 
 const FlowerPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const flowers = useSelector((store) => store.flower);
 
     // Reference to call `editFlower` in FlowerFormComponent
     const flowerFormRef = useRef<any>(null);
@@ -72,7 +70,6 @@ const FlowerPage = () => {
             {/* Table */}
             <div>
                 <FlowerTableComponent
-                    flowers={flowers}
                     onEditFlower={handleEditFlower}
                 />
             </div>

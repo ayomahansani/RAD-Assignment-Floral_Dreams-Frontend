@@ -200,8 +200,8 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                         <input
                             type="number"
                             id="flower_unit_price"
-                            value={flowerUnitPrice}
-                            onChange={(e) => setFlowerUnitPrice(Number(e.target.value))}
+                            value={flowerUnitPrice || ""}
+                            onChange={(e) => setFlowerUnitPrice(e.target.value ? parseInt(e.target.value) : undefined)}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="567.70"
                             required
@@ -214,8 +214,8 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                         <input
                             type="number"
                             id="flower_qty_on_hand"
-                            value={flowerQtyOnHand}
-                            onChange={(e) => setFlowerQtyOnHand(Number(e.target.value))}
+                            value={flowerQtyOnHand || ""}
+                            onChange={(e) => setFlowerQtyOnHand(e.target.value ? parseInt(e.target.value) : undefined)}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="43"
                             required

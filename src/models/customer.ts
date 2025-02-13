@@ -16,4 +16,4 @@ export class Customer {
         this.customer_address = customer_address;
         this.gender = gender;
     }
-}
+}   

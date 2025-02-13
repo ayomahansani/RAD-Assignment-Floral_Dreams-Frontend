@@ -1,5 +1,4 @@
 import {useRef, useState} from "react";
-import {useSelector} from "react-redux";
 import {Customer} from "../models/customer.ts";
 import CustomerFormComponent from "../components/customer/CustomerFormComponent.tsx";
 import CustomerTableComponent from "../components/customer/CustomerTableComponent.tsx";
@@ -7,7 +6,6 @@ import CustomerTableComponent from "../components/customer/CustomerTableComponen
 
 const CustomerPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const customers = useSelector((store) => store.customer);
 
     // Reference to call `editFlower` in FlowerFormComponent
     const customerFormRef = useRef<any>(null);
@@ -73,7 +71,6 @@ const CustomerPage = () => {
             {/* Table */}
             <div>
                 <CustomerTableComponent
-                    customers={customers}
                     onEditCustomer={handleEditCustomer}
                 />
             </div>
