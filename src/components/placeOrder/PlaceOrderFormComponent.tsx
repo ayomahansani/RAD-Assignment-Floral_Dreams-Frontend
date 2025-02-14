@@ -1,6 +1,22 @@
 import { useState, useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch} from "../../store/Store.ts";
+import {Flower} from "../../models/flower.ts";
+import {Customer} from "../../models/customer.ts";
+import {viewCustomers} from "../../reducers/CustomerSlice.ts";
+import {viewFlowers} from "../../reducers/FlowerSlice.ts";
+
+interface RootState {
+    flower: Flower[]; // Adjust type based on your Flower model
+    customer: Customer[]; // Adjust type based on your Customer model
+}
 
 const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => void }) => {
+
+    const dispatch = useDispatch<AppDispatch>();
+    const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
+    const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
+
     const [orderId, setOrderId] = useState("");
     const [date, setDate] = useState("");
     const [customerName, setCustomerName] = useState("");
@@ -12,8 +28,6 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
     const [qtyOnHand, setQtyOnHand] = useState<number | undefined>();
     const [discount, setDiscount] = useState("");
     const [qty, setQty] = useState<number | undefined>();
-    const [customerEmailsList] = useState(["kiyo@gmail.com", "smith45@gmail.com", "alicetoni@gmail.com"]); // Example email list
-    const [itemNamesList] = useState(["Rose", "Tulip", "Lily"]); // Example item names list
     const [orderTotal, setOrderTotal] = useState<number | undefined>(0);
 
     useEffect(() => {
@@ -21,6 +35,11 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
         const currentDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
         setDate(currentDate);
     }, []);
+
+    useEffect(() => {
+        dispatch(viewCustomers());
+        dispatch(viewFlowers());
+    }, [dispatch]);
 
     function clearForm() {
 
@@ -105,9 +124,9 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             required
                         >
                             <option value="">Select Customer</option>
-                            {customerEmailsList.map((email, index) => (
-                                <option key={index} value={email}>
-                                    {email}
+                            {customers.map((customer, index) => (
+                                <option key={index} value={customer.customer_email}>
+                                    {customer.customer_email}
                                 </option>
                             ))}
                         </select>
@@ -122,9 +141,9 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             required
                         >
                             <option value="">Select Item</option>
-                            {itemNamesList.map((item, index) => (
-                                <option key={index} value={item}>
-                                    {item}
+                            {flowers.map((flower, index) => (
+                                <option key={index} value={flower.flower_name}>
+                                    {flower.flower_name}
                                 </option>
                             ))}
                         </select>
