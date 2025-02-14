@@ -46,7 +46,19 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
 
     const handleCustomerSelect = (selectedEmail: string) => {
         setEmail(selectedEmail);
-        const selectedCustomer = customers.find((customer) => customer.customer_email === selectedEmail);
+
+        // Clear related fields
+        setCustomerName("");
+        setCustomerPhone("");
+        setAddress("");
+
+        if (selectedEmail === "") {
+            return; // If no customer is selected, just clear the fields
+        }
+
+        const selectedCustomer = customers.find(
+            (customer) => customer.customer_email === selectedEmail
+        );
         if (selectedCustomer) {
             setCustomerName(selectedCustomer.customer_firstName);
             setCustomerPhone(selectedCustomer.customer_phone);
@@ -54,15 +66,51 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
         }
     };
 
-    const handleItemSelect = (selectedItemName: string) => {
-        setItemName(selectedItemName);
-        const selectedFlower = flowers.find((flower) => flower.flower_name === selectedItemName);
+    const handleItemSelect = (selectedOption: string) => {
+        setItemName(selectedOption);
+
+        // Clear related fields
+        setQtyOnHand(undefined);
+        setUnitPrice(undefined);
+        setItemCode(undefined);
+
+        if (selectedOption === "") {
+            return; // If no item is selected, just clear the fields
+        }
+
+        // Extract flower name and color
+        const [selectedName, selectedColor] = selectedOption.split(" - ");
+
+        // Find the selected flower
+        const selectedFlower = flowers.find(
+            (flower) =>
+                flower.flower_name === selectedName &&
+                flower.flower_colour === selectedColor
+        );
+
+        // Set related values if flower is found
         if (selectedFlower) {
             setQtyOnHand(selectedFlower.flower_qty_on_hand);
             setUnitPrice(selectedFlower.flower_unit_price);
-            setItemCode(selectedFlower.flower_code)
+            setItemCode(selectedFlower.flower_code);
         }
     };
+
+    const getFilteredFlowerOptions = () => {
+        // Filter to remove duplicates based on name and color
+        const uniqueFlowers = flowers.filter(
+            (flower, index, self) =>
+                index ===
+                self.findIndex(
+                    (f) =>
+                        f.flower_name === flower.flower_name &&
+                        f.flower_colour === flower.flower_colour
+                )
+        );
+        return uniqueFlowers;
+    };
+
+
 
     function clearForm() {
 
@@ -171,14 +219,18 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                             className="w-full p-1 font-bold border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             required
                         >
-                            <option value="">Select Item</option>
-                            {flowers.map((flower) => (
-                                <option key={flower.flower_code} value={flower.flower_name}>
-                                    {flower.flower_name}
+                            <option value="">Select Flower</option>
+                            {getFilteredFlowerOptions().map((flower) => (
+                                <option
+                                    key={`${flower.flower_code}-${flower.flower_colour}`}
+                                    value={`${flower.flower_name} - ${flower.flower_colour}`}
+                                >
+                                    {flower.flower_name} - {flower.flower_colour}
                                 </option>
                             ))}
                         </select>
                     </div>
+
 
                     {/* Customer Name */}
                     <div className="mb-3">
@@ -193,7 +245,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
 
                     {/* Quantity on Hand */}
                     <div className="mb-3">
-                        <input
+                    <input
                             type="number"
                             placeholder="Qty on Hand"
                             value={qtyOnHand || ""}
@@ -216,9 +268,9 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                     {/* Unit Price */}
                     <div className="mb-3">
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Unit Price"
-                            value={unitPrice}
+                            value={unitPrice !== undefined ? `Rs: ${unitPrice}` : ""}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />

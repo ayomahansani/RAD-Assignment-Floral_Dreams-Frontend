@@ -20,17 +20,18 @@ const PlaceOrderTableComponent = ({ cartItems, onDelete }: { cartItems: CartItem
                     <tbody>
                     {cartItems.length > 0 ? (
                         cartItems.map((item) => (
-                            <tr key={item.flowerCode} className="hover:bg- even:bg-transparent text-gray-700 border-t text-center" >
+                            <tr key={item.flowerCode}
+                                className="hover:bg- even:bg-transparent text-gray-700 border-t text-center">
                                 <td className="p-2">{item.flowerName}</td>
-                                <td className="p-2">{item.flowerUnitPrice}</td>
+                                <td className="p-2">{`Rs: ${item.flowerUnitPrice}`}</td>
                                 <td className="p-2">{item.quantity}</td>
-                                <td className="p-2">{item.total}</td>
+                                <td className="p-2 font-bold">{`Rs: ${item.total}`}</td>
                                 <td className="p-2">
                                     <button
                                         className="text-red-700 hover:text-red-800"
                                         onClick={() => onDelete(item.flowerCode)}
                                     >
-                                        <Trash2 className="h-6 w-6" />
+                                        <Trash2 className="h-6 w-6"/>
                                     </button>
                                 </td>
                             </tr>
