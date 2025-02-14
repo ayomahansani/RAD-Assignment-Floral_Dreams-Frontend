@@ -13,7 +13,11 @@ interface RootState {
     customer: Customer[]; // Adjust type based on your Customer model
 }
 
-const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void }) => {
+const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
+    onAddItem: (item: CartItems) => void;
+    subtotal: number;
+    cartItems: CartItems[];
+}) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
@@ -32,6 +36,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
     const [discount, setDiscount] = useState("");
     const [qty, setQty] = useState<number | undefined>();
     const [total, setTotal] = useState<number | undefined>(0);
+
 
     useEffect(() => {
         // Auto-generate the date
@@ -68,29 +73,30 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
 
     const handleItemSelect = (selectedOption: string) => {
         setItemName(selectedOption);
-
-        // Clear related fields
         setQtyOnHand(undefined);
         setUnitPrice(undefined);
         setItemCode(undefined);
 
         if (selectedOption === "") {
-            return; // If no item is selected, just clear the fields
+            return;
         }
 
-        // Extract flower name and color
         const [selectedName, selectedColor] = selectedOption.split(" - ");
-
-        // Find the selected flower
         const selectedFlower = flowers.find(
             (flower) =>
                 flower.flower_name === selectedName &&
                 flower.flower_colour === selectedColor
         );
 
-        // Set related values if flower is found
         if (selectedFlower) {
-            setQtyOnHand(selectedFlower.flower_qty_on_hand);
+            const flowerInCart = cartItems.find(
+                (item) => item.flowerCode === selectedFlower.flower_code
+            );
+            const remainingQtyOnHand =
+                selectedFlower.flower_qty_on_hand -
+                (flowerInCart ? flowerInCart.quantity : 0);
+
+            setQtyOnHand(remainingQtyOnHand);
             setUnitPrice(selectedFlower.flower_unit_price);
             setItemCode(selectedFlower.flower_code);
         }
@@ -134,6 +140,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
         }
 
         const totalAmount = unitPrice * qty;
+        setTotal(totalAmount);
 
         const newItem = new CartItems(
             itemCode!,
@@ -144,6 +151,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
         );
 
         onAddItem(newItem);
+        setQtyOnHand(qtyOnHand! - qty!); // Update displayed qty on hand without affecting the database
         clearForm();
     };
 
@@ -270,7 +278,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                         <input
                             type="text"
                             placeholder="Unit Price"
-                            value={unitPrice !== undefined ? `Rs: ${unitPrice}` : ""}
+                            value={unitPrice !== undefined ? `Rs: ${unitPrice.toFixed(2)}` : ""}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />
@@ -334,7 +342,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                 {/* New Form Layout */}
                 <form className="grid grid-cols-2 gap-2">
 
-                    {/* Input 1 */}
+                    {/* Wrapping Chargers */}
                     <div className="mb-2">
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Wrapping Chargers</label>
                         <input
@@ -345,7 +353,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                         />
                     </div>
 
-                    {/* Input 2 */}
+                    {/* Decoration Chargers */}
                     <div className="mb-2">
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Decoration Chargers</label>
                         <input
@@ -356,19 +364,20 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                         />
                     </div>
 
-                    {/* Input 3 */}
+                    {/* Sub Total */}
                     <div className="mb-2">
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Sub Total</label>
                         <input
                             type="text"
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            value={`Rs: ${subtotal.toFixed(2)}`} // Display subtotal
+                            className="w-full p-1 font-bold border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Sub Total"
                             readOnly
                         />
                     </div>
 
 
-                    {/* Input 4 */}
+                    {/* Paid Amount */}
                     <div className="mb-2">
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Paid Amount</label>
                         <input
@@ -379,7 +388,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                         />
                     </div>
 
-                    {/* Input 5 */}
+                    {/* Discount */}
                     <div>
                         <label htmlFor="discount" className="block mb-2 text-md font-bold text-[#432e32]">
                             Discount
@@ -401,7 +410,7 @@ const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void
                     </div>
 
 
-                    {/* Input 6 */}
+                    {/* Balance */}
                     <div className="mb-2">
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Balance</label>
                         <input

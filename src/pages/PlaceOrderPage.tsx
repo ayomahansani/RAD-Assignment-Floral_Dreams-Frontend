@@ -6,7 +6,7 @@ import { CartItems } from "../models/cartItems.ts";
 const PlaceOrderPage = () => {
     const [cartItems, setCartItems] = useState<CartItems[]>([]);
 
-    const handleAddOrder = (newOrder: CartItems) => {
+    const handleAddItems = (newOrder: CartItems) => {
         setCartItems((prevOrders) => {
             const existingItem = prevOrders.find(
                 (item) => item.flowerCode === newOrder.flowerCode
@@ -37,10 +37,17 @@ const PlaceOrderPage = () => {
         );
     };
 
+    // Calculate subtotal
+    const subtotal = cartItems.reduce((sum, item) => sum + item.total, 0);
+
     return (
         <div className="p-2">
             {/* Forms Section */}
-            <PlaceOrderFormComponent onAddItem={handleAddOrder} />
+            <PlaceOrderFormComponent
+                onAddItem={handleAddItems}
+                subtotal={subtotal}
+                cartItems={cartItems}
+            />
 
             {/* Add gap between the form and table */}
             <div className="my-5"></div> {/* Vertical margin for gap */}
