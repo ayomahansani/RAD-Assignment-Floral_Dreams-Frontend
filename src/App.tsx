@@ -8,7 +8,7 @@ import SignUpFormComponent from "./components/signUp/SignUpFormComponent.tsx";
 
 function App() {
 
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // ✅ Get from Redux
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // Get from Redux
 
     console.log("App Component - isAuthenticated:", isAuthenticated);
 

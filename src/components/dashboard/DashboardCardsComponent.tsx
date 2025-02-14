@@ -1,13 +1,26 @@
+import { useSelector } from "react-redux";
+import {Flower} from "../../models/flower.ts";
+import {Customer} from "../../models/customer.ts";
+
+interface RootState {
+    flower: Flower[]; // Adjust type based on your Flower model
+    customer: Customer[]; // Adjust type based on your Customer model
+}
+
 const DashboardCardsComponent = () => {
+
+    const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
+    const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
+
     const cards = [
         {
             title: "Flowers",
-            count: 120,
+            count: flowers.length,
             image: "/flower2.jpg", // Replace with the actual image path
         },
         {
             title: "Customers",
-            count: 80,
+            count: customers.length,
             image: "/customer-card.jpg", // Replace with the actual image path
         },
         {

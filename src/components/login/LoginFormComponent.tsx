@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {clearError, loginUser} from "../../reducers/UserSlice.ts";
 import {AppDispatch} from "../../store/Store.ts";
+import {viewFlowers} from "../../reducers/FlowerSlice.ts";
+import {viewCustomers} from "../../reducers/CustomerSlice.ts";
 
 function LoginFormComponent() {
 
@@ -32,10 +34,12 @@ function LoginFormComponent() {
 
     useEffect(() => {
         if (isAuthenticated) {
+            dispatch(viewFlowers());
+            dispatch(viewCustomers());
             toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
             navigate("/");
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, dispatch]);
 
     const handleSignIn = async (event: React.FormEvent) => {
         event.preventDefault();
