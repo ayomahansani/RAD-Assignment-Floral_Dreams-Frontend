@@ -9,7 +9,6 @@ const PlaceOrderTableComponent = ({ orders, onDelete }: { orders: any[]; onDelet
                     <thead>
                     <tr className="bg-gray-100 text-gray-600 text-xs uppercase tracking-wider">
                         <th className="border border-gray-300 p-2">Item Name</th>
-                        <th className="border border-gray-300 p-2">Qty On Hand</th>
                         <th className="border border-gray-300 p-2">Unit Price</th>
                         <th className="border border-gray-300 p-2">Quantity</th>
                         <th className="border border-gray-300 p-2">Total</th>

@@ -1,11 +1,11 @@
 import {Customer} from "./customer.ts";
-import {OrderItem} from "./orderItem.ts";
+import {CartItems} from "./cartItems.ts";
 
 export class Order {
     order_id: number;
     customer: Customer; // Reference to a Customer object
     order_date: string;
-    order_items: OrderItem[]; // List of items in the placeOrder
+    order_items: CartItems[]; // List of items in the placeOrder
     wrapping_charges: number;
     decoration_charges: number;
     sub_total: number;
@@ -14,7 +14,7 @@ export class Order {
     paid_amount: number;
     balance: number;
 
-    constructor(order_id: number, customer: Customer, order_date: string, order_items: OrderItem[], wrapping_charges: number, decoration_charges: number, sub_total: number, discount: number, total_amount: number, paid_amount: number, balance: number) {
+    constructor(order_id: number, customer: Customer, order_date: string, order_items: CartItems[], wrapping_charges: number, decoration_charges: number, sub_total: number, discount: number, total_amount: number, paid_amount: number, balance: number) {
         this.order_id = order_id;
         this.customer = customer;
         this.order_date = order_date;
