@@ -1,11 +1,15 @@
-import {Flower} from "./flower.ts";
-
 export class CartItems {
-    flower: Flower; // Reference to a Flower object
+    flowerCode: number;
+    flowerName: string;
+    flowerUnitPrice: number;
     quantity: number;
+    total: number;
 
-    constructor(flower: Flower, quantity: number) {
-        this.flower = flower;
+    constructor(flowerCode: number, flowerName: string, flowerUnitPrice: number, quantity: number, total: number) {
+        this.flowerCode = flowerCode;
+        this.flowerName = flowerName;
+        this.flowerUnitPrice = flowerUnitPrice;
         this.quantity = quantity;
+        this.total = total;
     }
 }
