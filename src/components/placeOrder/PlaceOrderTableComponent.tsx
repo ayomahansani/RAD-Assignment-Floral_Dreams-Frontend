@@ -1,5 +1,7 @@
+import {CartItems} from "../../models/cartItems.ts";
+import { Trash2 } from "lucide-react";
 
-const PlaceOrderTableComponent = ({ orders, onDelete }: { orders: any[]; onDelete: (orderId: number) => void }) => {
+const PlaceOrderTableComponent = ({ cartItems, onDelete }: { cartItems: CartItems[]; onDelete: (id: number) => void }) => {
     return (
 
         <div className="overflow-y-auto bg-[#bda6a6]" style={{maxHeight: '210px'}}>
@@ -16,20 +18,19 @@ const PlaceOrderTableComponent = ({ orders, onDelete }: { orders: any[]; onDelet
                     </tr>
                     </thead>
                     <tbody>
-                    {orders.length > 0 ? (
-                        orders.map((order, index) => (
-                            <tr key={index} className="hover:bg- even:bg-transparent text-gray-700 border-t text-center" >
-                                <td className="p-2">{order.orderId}</td>
-                                <td className="p-2">{order.customerName}</td>
-                                <td className="p-2">{order.itemName}</td>
-                                <td className="p-2">{order.quantity}</td>
-                                <td className="p-2">{order.total}</td>
+                    {cartItems.length > 0 ? (
+                        cartItems.map((item) => (
+                            <tr key={item.flowerCode} className="hover:bg- even:bg-transparent text-gray-700 border-t text-center" >
+                                <td className="p-2">{item.flowerName}</td>
+                                <td className="p-2">{item.flowerUnitPrice}</td>
+                                <td className="p-2">{item.quantity}</td>
+                                <td className="p-2">{item.total}</td>
                                 <td className="p-2">
                                     <button
-                                        className="px-5 py-2 text-xs font-bold text-white bg-black rounded hover:bg-gray-900 shadow-md"
-                                        onClick={() => onDelete(order.orderId)}
+                                        className="text-red-700 hover:text-red-800"
+                                        onClick={() => onDelete(item.flowerCode)}
                                     >
-                                        Delete
+                                        <Trash2 className="h-6 w-6" />
                                     </button>
                                 </td>
                             </tr>

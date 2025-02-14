@@ -5,13 +5,15 @@ import {Flower} from "../../models/flower.ts";
 import {Customer} from "../../models/customer.ts";
 import {viewCustomers} from "../../reducers/CustomerSlice.ts";
 import {viewFlowers} from "../../reducers/FlowerSlice.ts";
+import {CartItems} from "../../models/cartItems.ts";
+import {toast} from "react-toastify";
 
 interface RootState {
     flower: Flower[]; // Adjust type based on your Flower model
     customer: Customer[]; // Adjust type based on your Customer model
 }
 
-const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => void }) => {
+const PlaceOrderFormComponent = ({ onAddItem }: { onAddItem: (item: any) => void }) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
@@ -23,12 +25,13 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
     const [customerPhone, setCustomerPhone] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
+    const [itemCode, setItemCode] = useState<number | undefined>();
     const [itemName, setItemName] = useState("");
     const [unitPrice, setUnitPrice] = useState<number | undefined>();
     const [qtyOnHand, setQtyOnHand] = useState<number | undefined>();
     const [discount, setDiscount] = useState("");
     const [qty, setQty] = useState<number | undefined>();
-    const [orderTotal, setOrderTotal] = useState<number | undefined>(0);
+    const [total, setTotal] = useState<number | undefined>(0);
 
     useEffect(() => {
         // Auto-generate the date
@@ -41,44 +44,72 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
         dispatch(viewFlowers());
     }, [dispatch]);
 
+    const handleCustomerSelect = (selectedEmail: string) => {
+        setEmail(selectedEmail);
+        const selectedCustomer = customers.find((customer) => customer.customer_email === selectedEmail);
+        if (selectedCustomer) {
+            setCustomerName(selectedCustomer.customer_firstName);
+            setCustomerPhone(selectedCustomer.customer_phone);
+            setAddress(selectedCustomer.customer_address);
+        }
+    };
+
+    const handleItemSelect = (selectedItemName: string) => {
+        setItemName(selectedItemName);
+        const selectedFlower = flowers.find((flower) => flower.flower_name === selectedItemName);
+        if (selectedFlower) {
+            setQtyOnHand(selectedFlower.flower_qty_on_hand);
+            setUnitPrice(selectedFlower.flower_unit_price);
+            setItemCode(selectedFlower.flower_code)
+        }
+    };
+
     function clearForm() {
 
     }
 
-    const handleAddOrder = () => {
-        if (!orderId || !email || !itemName || !qty) {
-            alert("Please fill all fields!");
+    const handleAddItemToCart = () => {
+        if (!orderId || !email || !itemName || !qty || !unitPrice) {
+            toast.error("Please fill out all required fields.", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
             return;
         }
 
-        const newOrder = {
-            orderId,
-            date,
-            customerName,
-            customerPhone,
-            name,
-            address,
-            email,
-            itemName,
-            qtyOnHand,
-            qty,
-            orderTotal,
-        };
+        if (qtyOnHand !== undefined && qty > qtyOnHand) {
+            toast.error("Quantity exceeds available stock!", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+            return;
+        }
 
-        onAddOrder(newOrder);
+        const totalAmount = unitPrice * qty;
+
+        const newItem = new CartItems(
+            itemCode!,
+            itemName,
+            unitPrice,
+            qty,
+            totalAmount
+        );
+
+        onAddItem(newItem);
         clearForm();
     };
 
+
     const handleClearForm = () => {
-        setOrderId("");
         setCustomerName("");
         setCustomerPhone("");
         setAddress("");
         setEmail("");
         setItemName("");
         setQtyOnHand(undefined);
+        setUnitPrice(undefined);
         setQty(undefined);
-        setOrderTotal(0);
+        setTotal(0);
     };
 
     return (
@@ -119,13 +150,13 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                     <div className="mb-3">
                         <select
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
+                            onChange={(e) => handleCustomerSelect(e.target.value)}
+                            className="w-full p-1 font-bold border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             required
                         >
                             <option value="">Select Customer</option>
-                            {customers.map((customer, index) => (
-                                <option key={index} value={customer.customer_email}>
+                            {customers.map((customer) => (
+                                <option key={customer.customer_id} value={customer.customer_email}>
                                     {customer.customer_email}
                                 </option>
                             ))}
@@ -136,13 +167,13 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                     <div className="mb-3">
                         <select
                             value={itemName}
-                            onChange={(e) => setItemName(e.target.value)}
-                            className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
+                            onChange={(e) => handleItemSelect(e.target.value)}
+                            className="w-full p-1 font-bold border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             required
                         >
                             <option value="">Select Item</option>
-                            {flowers.map((flower, index) => (
-                                <option key={index} value={flower.flower_name}>
+                            {flowers.map((flower) => (
+                                <option key={flower.flower_code} value={flower.flower_name}>
                                     {flower.flower_name}
                                 </option>
                             ))}
@@ -155,7 +186,6 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             type="text"
                             placeholder="Customer Name"
                             value={customerName}
-                            onChange={(e) => setCustomerName(e.target.value)}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />
@@ -167,7 +197,6 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             type="number"
                             placeholder="Qty on Hand"
                             value={qtyOnHand || ""}
-                            onChange={(e) => setQtyOnHand(Number(e.target.value))}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />
@@ -179,7 +208,6 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             type="text"
                             placeholder="Address"
                             value={address}
-                            onChange={(e) => setAddress(e.target.value)}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />
@@ -191,7 +219,6 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             type="number"
                             placeholder="Unit Price"
                             value={unitPrice}
-                            onChange={(e) => setUnitPrice(Number(e.target.value))}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />
@@ -203,7 +230,6 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             type="number"
                             placeholder="Contact"
                             value={customerPhone}
-                            onChange={(e) => setCustomerPhone(e.target.value)}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             readOnly
                         />
@@ -216,7 +242,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                             placeholder="Qty"
                             value={qty || ""}
                             onChange={(e) => setQty(Number(e.target.value))}
-                            className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 font-bold border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             required
                         />
                     </div>
@@ -225,7 +251,7 @@ const PlaceOrderFormComponent = ({ onAddOrder }: { onAddOrder: (order: any) => v
                     <div className="col-span-2 flex gap-2 mb-2">
                         <button
                             type="button"
-                            onClick={handleAddOrder}
+                            onClick={handleAddItemToCart}
                             className="w-full h-9 bg-yellow-600 text-black font-bold border-2 border-yellow-600 rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                             style={{
                                 fontFamily: "'Nunito Sans', sans-serif", // Clean and modern font
