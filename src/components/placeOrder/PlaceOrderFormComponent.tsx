@@ -33,10 +33,17 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
     const [itemName, setItemName] = useState("");
     const [unitPrice, setUnitPrice] = useState<number | undefined>();
     const [qtyOnHand, setQtyOnHand] = useState<number | undefined>();
+    const [wrappingCharges, setWrappingCharges] = useState<number | undefined>();
+    const [decorationCharges, setDecorationCharges] = useState<number | undefined>();
+    const [paidAmount, setPaidAmount] = useState<number | undefined>();
+    const [balance, setBalance] = useState<number | undefined>();
+    const [totalAmount, setTotalAmount] = useState<number | undefined>();
     const [discount, setDiscount] = useState("");
     const [qty, setQty] = useState<number | undefined>();
     const [total, setTotal] = useState<number | undefined>(0);
 
+    // Calculate the computed subtotal by adding additional charges to the table total
+    const computedSubtotal = subtotal + (wrappingCharges || 0) + (decorationCharges || 0);
 
     useEffect(() => {
         // Auto-generate the date
@@ -48,6 +55,26 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
         dispatch(viewCustomers());
         dispatch(viewFlowers());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (discount && computedSubtotal) {
+            const discountValue = parseFloat(discount); // Convert to number
+            const discountAmount = computedSubtotal * discountValue; // Calculate discount
+            const finalTotal = computedSubtotal - discountAmount; // Subtract discount
+            setTotalAmount(finalTotal); // Set total amount
+        }
+    }, [discount, computedSubtotal]); // Runs when discount or subtotal changes
+
+    useEffect(() => {
+        if (paidAmount !== undefined && totalAmount !== undefined) {
+            if (paidAmount >= totalAmount) {
+                setBalance(paidAmount - totalAmount);
+            } else {
+                setBalance(undefined);
+            }
+        }
+    }, [paidAmount, totalAmount]);
+
 
     const handleCustomerSelect = (selectedEmail: string) => {
         setEmail(selectedEmail);
@@ -349,6 +376,8 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                             type="number"
                             className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Enter charge"
+                            value={wrappingCharges || ""}
+                            onChange={(e) => setWrappingCharges(Number(e.target.value))}
                             required
                         />
                     </div>
@@ -360,6 +389,8 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                             type="number"
                             className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Enter charge"
+                            value={decorationCharges || ""}
+                            onChange={(e) => setDecorationCharges(Number(e.target.value))}
                             required
                         />
                     </div>
@@ -369,7 +400,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Sub Total</label>
                         <input
                             type="text"
-                            value={`Rs: ${subtotal.toFixed(2)}`} // Display subtotal
+                            value={`Rs: ${computedSubtotal.toFixed(2)}`}
                             className="w-full p-1 font-bold border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Sub Total"
                             readOnly
@@ -384,6 +415,8 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                             type="text"
                             className="w-full p-1 border border-[#432e32] rounded bg-amber-50 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Enter cash"
+                            value={paidAmount || ""}
+                            onChange={(e) => setPaidAmount(Number(e.target.value))}
                             required
                         />
                     </div>
@@ -400,12 +433,13 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                             onChange={(e) => setDiscount(e.target.value)}
                             required
                         >
-                            <option value="" disabled>
+                            <option value="">
                                 Select discount
                             </option>
-                            <option value="5">5%</option>
-                            <option value="10">10%</option>
-                            <option value="15">15%</option>
+                            <option value="0">0%</option>
+                            <option value="0.05">5%</option>
+                            <option value="0.1">10%</option>
+                            <option value="0.15">15%</option>
                         </select>
                     </div>
 
@@ -415,8 +449,9 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                         <label className="block mb-2 text-md font-bold text-[#432e32]">Balance</label>
                         <input
                             type="text"
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 font-bold border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Balance"
+                            value={balance !== undefined ? `Rs: ${balance.toFixed(2)}` : ""}
                             readOnly
                         />
                     </div>
@@ -428,8 +463,9 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                         {/* Input 6 */}
                         <input
                             type="text"
-                            className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
+                            className="w-full p-1 font-extrabold text-blue-800 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="Total Amount"
+                            value={totalAmount ? `Rs: ${totalAmount.toFixed(2)}` : ""}
                             readOnly
                         />
                         <button
