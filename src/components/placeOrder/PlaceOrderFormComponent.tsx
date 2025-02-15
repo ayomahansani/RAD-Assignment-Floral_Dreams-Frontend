@@ -7,6 +7,9 @@ import {viewCustomers} from "../../reducers/CustomerSlice.ts";
 import {viewFlowers} from "../../reducers/FlowerSlice.ts";
 import {CartItems} from "../../models/cartItems.ts";
 import {toast} from "react-toastify";
+import {OrderDetails} from "../../models/orderDetails.ts";
+import {saveOrder} from "../../reducers/OrderSlice.ts";
+import {Order} from "../../models/order.ts";
 
 interface RootState {
     flower: Flower[]; // Adjust type based on your Flower model
@@ -181,6 +184,59 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
         setQtyOnHand(qtyOnHand! - qty!); // Update displayed qty on hand without affecting the database
         clearForm();
     };
+
+    const handlePlaceOrder = () => {
+        if (cartItems.length === 0 ) {
+            toast.error("No added items yet!", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+            return;
+        }
+
+        if (!paidAmount || !discount) {
+            toast.error("Please fill out all required fields.", {
+                position: "bottom-right",
+                autoClose: 2000,
+            });
+            return;
+        }
+
+        // Convert discount to a number
+        const discountNumber = parseFloat(discount);
+
+        const orderDetails: OrderDetails[] = cartItems.map(item => ({
+            order_id: 0,
+            item: item.flowerCode.toString(),
+            quantity: item.quantity,
+            unitPrice: item.flowerUnitPrice,
+            total: item.total
+        }));
+
+        const newOrder: Order = {
+            order_id: 0,
+            customer_email: email,
+            order_date: date,
+            order_items: orderDetails,
+            wrapping_charges: wrappingCharges || 0,
+            decoration_charges: decorationCharges || 0,
+            sub_total: subtotal,
+            discount: discountNumber,
+            total_amount: totalAmount || 0,
+            paid_amount: paidAmount || 0,
+            balance: balance || 0,
+        }
+
+        dispatch(saveOrder(newOrder));
+
+        toast.success("Order saved successfully!", {
+            position: "bottom-right",
+            autoClose: 2000,
+        });
+
+        handleClearForm();
+
+    }
 
 
     const handleClearForm = () => {
@@ -470,6 +526,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                         />
                         <button
                             className="w-full h-9 bg-[#7fd6a6] text-black font-bold border-2 border-[#7fd6a6] rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
+                            onClick={handlePlaceOrder}
                         >
                             Place Order
                         </button>
