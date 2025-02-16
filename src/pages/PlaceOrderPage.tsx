@@ -47,6 +47,7 @@ const PlaceOrderPage = () => {
                 onAddItem={handleAddItems}
                 subtotal={subtotal}
                 cartItems={cartItems}
+                setCartItems={setCartItems} // Pass the setter
             />
 
             {/* Add gap between the form and table */}

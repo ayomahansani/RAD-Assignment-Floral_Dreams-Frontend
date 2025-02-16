@@ -14,17 +14,20 @@ import {Order} from "../../models/order.ts";
 interface RootState {
     flower: Flower[]; // Adjust type based on your Flower model
     customer: Customer[]; // Adjust type based on your Customer model
+    order: Order[];
 }
 
-const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
+const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}: {
     onAddItem: (item: CartItems) => void;
     subtotal: number;
     cartItems: CartItems[];
+    setCartItems: React.Dispatch<React.SetStateAction<CartItems[]>>;
 }) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
     const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
+    const orders = useSelector((state: RootState) => state.order);
 
     const [orderId, setOrderId] = useState("");
     const [date, setDate] = useState("");
@@ -146,12 +149,6 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
         return uniqueFlowers;
     };
 
-
-
-    function clearForm() {
-
-    }
-
     const handleAddItemToCart = () => {
         if (!orderId || !email || !itemName || !qty || !unitPrice) {
             toast.error("Please fill out all required fields.", {
@@ -182,7 +179,6 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
 
         onAddItem(newItem);
         setQtyOnHand(qtyOnHand! - qty!); // Update displayed qty on hand without affecting the database
-        clearForm();
     };
 
     const handlePlaceOrder = () => {
@@ -231,11 +227,11 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
 
         toast.success("Order saved successfully!", {
             position: "bottom-right",
-            autoClose: 2000,
+            autoClose: 2020,
         });
 
         handleClearForm();
-
+        setCartItems([]);
     }
 
 
@@ -248,6 +244,12 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
         setQtyOnHand(undefined);
         setUnitPrice(undefined);
         setQty(undefined);
+        setWrappingCharges(undefined);
+        setDecorationCharges(undefined);
+        setPaidAmount(undefined);
+        setBalance(undefined);
+        setTotalAmount(undefined);
+        setDiscount("");
         setTotal(0);
     };
 
@@ -525,6 +527,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems,}: {
                             readOnly
                         />
                         <button
+                            type="button"
                             className="w-full h-9 bg-[#7fd6a6] text-black font-bold border-2 border-[#7fd6a6] rounded-lg text-center shadow-lg shadow-[#7e6868] hover:bg-transparent hover:text-black hover:border-black"
                             onClick={handlePlaceOrder}
                         >
