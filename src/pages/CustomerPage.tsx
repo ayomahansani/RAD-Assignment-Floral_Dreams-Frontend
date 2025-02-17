@@ -17,6 +17,14 @@ const CustomerPage = () => {
 
     const openModal = () => {
         setIsModalOpen(true);
+        const nextCustomerId = customers.length + 1; // Generate the next flower code
+        setTimeout(() => {
+            if (customerFormRef.current) {
+                customerFormRef.current.setNewCustomerId(nextCustomerId); // Pass the generated code
+            } else {
+                console.error("customerFormRef is null.");
+            }
+        }, 0);
     };
 
     const closeModal = () => {

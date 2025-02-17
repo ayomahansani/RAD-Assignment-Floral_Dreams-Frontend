@@ -33,7 +33,11 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
             setCustomerAddress(customer.customer_address);
             setGender(customer.gender);
             setEditMode(true);
-        }
+        },
+        setNewCustomerId(newId: number) {
+            clearForm(); // Clear other fields
+            setCustomerId(newId);
+        },
     }));
 
     const handleCustomerOperation = (type: "ADD_CUSTOMER" | "UPDATE_CUSTOMER") => {
@@ -133,7 +137,7 @@ const CustomerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () =
                             onKeyDown={handleSearchByCustomerId}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="01"
-                            required
+                            readOnly
                         />
                     </div>
                     <div>
