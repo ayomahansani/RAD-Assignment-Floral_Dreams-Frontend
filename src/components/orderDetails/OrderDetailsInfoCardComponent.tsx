@@ -14,7 +14,7 @@ interface OrderInfoProps {
 
 const OrderDetailsInfoCardComponent: React.FC<OrderInfoProps> = ({ customer_email, order_date, wrapping_charges, decoration_charges, sub_total, discount, total_amount, paid_amount, balance }) => {
     return (
-        <div className="p-2 border-2 border-[#432e32] rounded-lg shadow-md bg-[#bda6a6] mb-4">
+        <div className="p-2 border-2 border-[#432e32] rounded-lg shadow-md bg-[#bda6a6] mb-2">
             <h4 className="font-bold text-lg mb-3">Order Details -:  {customer_email}</h4>
             <div className="mr-10 grid grid-cols-2 gap-20 font-semibold text-gray-700">
                 <div>

@@ -27,12 +27,12 @@ const OrderDetailsPage = () => {
         return orders.find((order) => order.order_id == orderId) || null;
     }
 
-    const selectedOrder = selectedOrderId ? searchOrderById(selectedOrderId) : new Order(0, '', '', [], 0, 0, 0, 0, 0, 0, 0);
+    const selectedOrder = selectedOrderId ? searchOrderById(selectedOrderId) : new Order(0, '', '-', [], 0, 0, 0, 0, 0, 0, 0);
 
     return (
         <div className="relative p-3">
 
-            <div className="p-2 border-2 border-[#432e32] rounded-lg shadow-md bg-[#bda6a6] mb-4">
+            <div className="p-2 border-2 border-[#432e32] rounded-lg shadow-md bg-[#bda6a6] mb-2">
                 <div className="max-w-md">
                     <label className="block text-md font-bold text-black mb-1">Select Order</label>
                     <select

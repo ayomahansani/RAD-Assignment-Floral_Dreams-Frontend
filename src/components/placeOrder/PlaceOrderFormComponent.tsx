@@ -47,8 +47,6 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
     const [qty, setQty] = useState<number | undefined>();
     const [total, setTotal] = useState<number | undefined>(0);
 
-    const [filteredFlowers, setFilteredFlowers] = useState([]);
-
     // Calculate the computed subtotal by adding additional charges to the table total
     const computedSubtotal = subtotal + (wrappingCharges || 0) + (decorationCharges || 0);
 

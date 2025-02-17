@@ -82,7 +82,7 @@ const FlowerTableComponent = ({onEditFlower,}: { onEditFlower: (flower: Flower) 
                                 <td className="px-6 py-4">{flower.flower_name}</td>
                                 <td className="px-6 py-4">{flower.flower_colour}</td>
                                 <td className="px-6 py-4">{flower.flower_size}</td>
-                                <td className="px-6 py-4">{flower.flower_unit_price}</td>
+                                <td className="px-6 py-4">Rs : {flower.flower_unit_price}</td>
                                 <td className="px-6 py-4">{flower.flower_qty_on_hand}</td>
                                 <td className="px-6 py-4">
                                     {flower.flower_image ? (
