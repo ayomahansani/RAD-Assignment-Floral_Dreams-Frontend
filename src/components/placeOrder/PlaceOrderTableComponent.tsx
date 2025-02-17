@@ -21,7 +21,7 @@ const PlaceOrderTableComponent = ({ cartItems, onDelete }: { cartItems: CartItem
                 {cartItems.length > 0 ? (
                     cartItems.map((item) => (
                         <tr key={item.flowerCode}
-                            className="hover:bg- even:bg-transparent text-gray-700 border-t text-center">
+                            className="hover:bg-[#d3c2c2] even:bg-transparent text-gray-700 border-t text-center">
                             <td className="p-2">{item.flowerName}</td>
                             <td className="p-2">{`Rs: ${item.flowerUnitPrice.toFixed(2)}`}</td>
                             <td className="p-2">{item.quantity}</td>

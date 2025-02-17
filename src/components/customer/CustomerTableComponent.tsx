@@ -78,7 +78,7 @@ const CustomerTableComponent = ({onEditCustomer}: {onEditCustomer: (customer: Cu
                         customers.map((customer: Customer, index: number) => (
                             <tr
                                 key={index}
-                                className="hover:bg- even:bg-transparent text-gray-700 border-t"
+                                className="hover:bg-[#d3c2c2] even:bg-transparent text-gray-700 border-t"
                             >
                                 <td className="px-6 py-4">{customer.customer_id}</td>
                                 <td className="px-6 py-4">{customer.customer_firstName}</td>

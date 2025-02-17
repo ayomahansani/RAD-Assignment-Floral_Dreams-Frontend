@@ -76,7 +76,7 @@ const FlowerTableComponent = ({onEditFlower,}: { onEditFlower: (flower: Flower) 
                         flowers.map((flower: Flower, index: number) => (
                             <tr
                                 key={index}
-                                className="hover:bg- even:bg-transparent text-gray-700 border-t"
+                                className="hover:bg-[#d3c2c2] even:bg-transparent text-gray-700 border-t"
                             >
                                 <td className="px-6 py-4">{flower.flower_code}</td>
                                 <td className="px-6 py-4">{flower.flower_name}</td>
