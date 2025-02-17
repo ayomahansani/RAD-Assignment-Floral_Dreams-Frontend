@@ -27,6 +27,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
     const dispatch = useDispatch<AppDispatch>();
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
     const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
+    const orders = useSelector((state: RootState) => state.order);
 
     const [orderId, setOrderId] = useState("");
     const [date, setDate] = useState("");
@@ -60,6 +61,12 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
         dispatch(viewCustomers());
         dispatch(viewFlowers());
     }, [dispatch]);
+
+    // **Auto-generate the next Order ID**
+    useEffect(() => {
+        // Generate the next order id based on the number of orders in the store
+        setOrderId((orders.length + 1).toString());
+    }, [orders]);
 
     useEffect(() => {
         if (discount && computedSubtotal) {
@@ -270,7 +277,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
                             value={orderId}
                             onChange={(e) => setOrderId(e.target.value)}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
-                            required
+                            readOnly
                         />
                     </div>
 
