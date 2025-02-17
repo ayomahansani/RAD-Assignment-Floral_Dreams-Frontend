@@ -17,6 +17,14 @@ const FlowerPage = () => {
 
     const openModal = () => {
         setIsModalOpen(true);
+        const nextFlowerCode = flowers.length + 1; // Generate the next flower code
+        setTimeout(() => {
+            if (flowerFormRef.current) {
+                flowerFormRef.current.setNewFlowerCode(nextFlowerCode); // Pass the generated code
+            } else {
+                console.error("flowerFormRef is null.");
+            }
+        }, 0);
     };
 
     const closeModal = () => {

@@ -36,6 +36,10 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
             setPreviewFlowerImage(flower.flower_image || null);
             setEditMode(true);
         },
+        setNewFlowerCode(newCode: number) {
+            clearForm(); // Reset the form for new entries
+            setFlowerCode(newCode); // Set the auto-generated flower code
+        },
     }));
 
     const handleFlowerOperation = async (type: "ADD_FLOWER" | "UPDATE_FLOWER") => {
@@ -146,7 +150,7 @@ const FlowerFormComponent = forwardRef(({ onCloseModal }: { onCloseModal: () => 
                             onKeyDown={handleSearchByFlowerCode}
                             className="w-full p-1 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"
                             placeholder="01"
-                            required
+                            readOnly
                         />
                     </div>
                     <div>

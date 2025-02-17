@@ -119,16 +119,15 @@ export default function HoverableSidebar() {
                             { text: 'Customers', icon: <GroupIcon />, to: '/customer' }, // Group Icon (Customer Management)
                             { text: 'Place Order', icon: <ShoppingCartIcon />, to: '/placeOrder' }, // Shopping Cart Icon for Orders
                             { text: 'Order Details', icon: <ReceiptLongIcon />, to: '/orderDetails' }, // Receipt Icon for Order Details
-                            { text: 'Payment', icon: <PaymentIcon />, to: '/payment' }, // Payment Icon for Transactions
+                            /*{ text: 'Payment', icon: <PaymentIcon />, to: '/payment' }, // Payment Icon for Transactions*/
                             { text: 'Log Out', icon: <ExitToAppIcon />, to: '/login' }, // Log Out Icon
                         ].map((item) => (
                             <Tooltip title={item.text} placement="right" key={item.text}>
                                 <ListItem
                                     disablePadding
                                     sx={{
-                                        marginBottom: '5px', // Add vertical margin between list items
+                                        marginBottom: '16px', // Add vertical margin between list items
                                         border: '2px solid #674b50', // Add border
-                                        // borderRadius: '8px', // Round the corners
                                     }}
                                 >
                                     <ListItemButton
@@ -205,8 +204,8 @@ export default function HoverableSidebar() {
                                     return 'Orders Management';
                                 case '/orderDetails':
                                     return 'Order Details';
-                                case '/payment':
-                                    return 'Payments';
+                                /*case '/payment':
+                                    return 'Payments';*/
                                 case '/logout':
                                     return 'Logout';
                                 default:
@@ -224,7 +223,7 @@ export default function HoverableSidebar() {
                         <Route path="/customer" element={<CustomerPage />} />
                         <Route path="/placeOrder" element={<PlaceOrderPage />} />
                         <Route path="/orderDetails" element={<OrderDetailsPage />} />
-                        <Route path="/payment" element={<FlowerPage />} />
+                        {/*<Route path="/payment" element={<FlowerPage />} />*/}
                     </Routes>
                 </Box>
 
