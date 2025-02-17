@@ -7,6 +7,7 @@ import {AppDispatch} from "../../store/Store.ts";
 import {User} from "../../models/user.ts";
 import {viewFlowers} from "../../reducers/FlowerSlice.ts";
 import {viewCustomers} from "../../reducers/CustomerSlice.ts";
+import {viewOrders} from "../../reducers/OrderSlice.ts";
 
 function SignUpFormComponent() {
 
@@ -37,6 +38,7 @@ function SignUpFormComponent() {
         if (isAuthenticated) {
             dispatch(viewFlowers());
             dispatch(viewCustomers());
+            dispatch(viewOrders());
             toast.success("Sign-up successful!", { position: "bottom-right", autoClose: 2000 });
             navigate("/");
         }

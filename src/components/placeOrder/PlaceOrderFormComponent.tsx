@@ -226,13 +226,10 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
 
         dispatch(saveOrder(newOrder));
 
-        toast.success("Order saved successfully!", {
+        toast.success("Order placed successfully!", {
             position: "bottom-right",
             autoClose: 2020,
         });
-
-        // todo : load flowers to combo box after placing an order
-        getFilteredFlowerOptions();
 
         handleClearForm();
         setCartItems([]);

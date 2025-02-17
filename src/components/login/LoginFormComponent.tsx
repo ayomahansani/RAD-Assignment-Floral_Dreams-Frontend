@@ -6,6 +6,7 @@ import {clearError, loginUser} from "../../reducers/UserSlice.ts";
 import {AppDispatch} from "../../store/Store.ts";
 import {viewFlowers} from "../../reducers/FlowerSlice.ts";
 import {viewCustomers} from "../../reducers/CustomerSlice.ts";
+import {viewOrders} from "../../reducers/OrderSlice.ts";
 
 function LoginFormComponent() {
 
@@ -36,6 +37,7 @@ function LoginFormComponent() {
         if (isAuthenticated) {
             dispatch(viewFlowers());
             dispatch(viewCustomers());
+            dispatch(viewOrders());
             toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
             navigate("/");
         }

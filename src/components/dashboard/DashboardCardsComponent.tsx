@@ -1,16 +1,19 @@
 import { useSelector } from "react-redux";
 import {Flower} from "../../models/flower.ts";
 import {Customer} from "../../models/customer.ts";
+import {Order} from "../../models/order.ts";
 
 interface RootState {
     flower: Flower[]; // Adjust type based on your Flower model
     customer: Customer[]; // Adjust type based on your Customer model
+    order: Order[];
 }
 
 const DashboardCardsComponent = () => {
 
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
     const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
+    const orders = useSelector((state: RootState) => state.order); // Get orders from Redux store
 
     const cards = [
         {
@@ -25,7 +28,7 @@ const DashboardCardsComponent = () => {
         },
         {
             title: "Orders",
-            count: 45,
+            count: orders.length,
             image: "/order.jpg", // Replace with the actual image path
         },
     ];
