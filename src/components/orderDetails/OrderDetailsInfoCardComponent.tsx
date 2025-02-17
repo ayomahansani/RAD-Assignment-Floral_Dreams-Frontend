@@ -14,20 +14,45 @@ interface OrderInfoProps {
 
 const OrderDetailsInfoCardComponent: React.FC<OrderInfoProps> = ({ customer_email, order_date, wrapping_charges, decoration_charges, sub_total, discount, total_amount, paid_amount, balance }) => {
     return (
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h4 className="font-bold text-lg">Order Details</h4>
-            <p>Customer: {customer_email}</p>
-            <div>
-                <p>Order Date           :  {order_date}</p>
-                <p>Wrapping Charges     : ${wrapping_charges.toFixed(2)}</p>
-                <p>Decoration Charges   : ${decoration_charges.toFixed(2)}</p>
-                <p>Sub Total            : ${sub_total.toFixed(2)}</p>
-            </div>
-            <div>
-                <p>Discount             : {discount}</p>
-                <p>Total Amount         : ${total_amount.toFixed(2)}</p>
-                <p>Paid Amount          : ${paid_amount.toFixed(2)}</p>
-                <p>Balance              : ${balance.toFixed(2)}</p>
+        <div className="p-2 border-2 border-[#432e32] rounded-lg shadow-md bg-[#bda6a6] mb-4">
+            <h4 className="font-bold text-lg mb-3">Order Details :  {customer_email}</h4>
+            <div className="mr-10 grid grid-cols-2 gap-20">
+                <div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Order Date : </p>
+                        <p>{order_date}</p>
+                    </div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Wrapping Charges : </p>
+                        <p>Rs : {wrapping_charges}</p>
+                    </div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Decoration Charges : </p>
+                        <p>Rs : {decoration_charges}</p>
+                    </div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Sub Total : </p>
+                        <p>Rs : {sub_total}</p>
+                    </div>
+                </div>
+                <div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Discount : </p>
+                        <p>Rs : {discount}</p>
+                    </div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Total Amount : </p>
+                        <p>Rs : {total_amount}</p>
+                    </div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Paid Amount : </p>
+                        <p>Rs : {paid_amount}</p>
+                    </div>
+                    <div className="flex justify-between mb-1">
+                        <p className="flex-shrink-0">Balance : </p>
+                        <p>Rs : {balance}</p>
+                    </div>
+                </div>
             </div>
         </div>
     );
