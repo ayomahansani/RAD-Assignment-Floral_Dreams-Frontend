@@ -27,7 +27,6 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
     const dispatch = useDispatch<AppDispatch>();
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
     const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
-    const orders = useSelector((state: RootState) => state.order);
 
     const [orderId, setOrderId] = useState("");
     const [date, setDate] = useState("");
@@ -47,6 +46,8 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
     const [discount, setDiscount] = useState("");
     const [qty, setQty] = useState<number | undefined>();
     const [total, setTotal] = useState<number | undefined>(0);
+
+    const [filteredFlowers, setFilteredFlowers] = useState([]);
 
     // Calculate the computed subtotal by adding additional charges to the table total
     const computedSubtotal = subtotal + (wrappingCharges || 0) + (decorationCharges || 0);
@@ -229,6 +230,9 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
             position: "bottom-right",
             autoClose: 2020,
         });
+
+        // todo : load flowers to combo box after placing an order
+        getFilteredFlowerOptions();
 
         handleClearForm();
         setCartItems([]);
