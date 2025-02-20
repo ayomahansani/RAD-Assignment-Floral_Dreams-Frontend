@@ -22,8 +22,6 @@ const OrderDetailsPage = () => {
     }, [dispatch]);
 
     function searchOrderById(orderId: number) {
-        console.log(orders)
-        console.log(orderId)
         return orders.find((order) => order.order_id == orderId) || null;
     }
 

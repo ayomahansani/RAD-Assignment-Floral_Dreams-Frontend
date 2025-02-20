@@ -18,7 +18,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import PaymentIcon from '@mui/icons-material/Payment';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import DashboardPage from '../../pages/DashboardPage.tsx';
@@ -29,6 +29,7 @@ import OrderDetailsPage from "../../pages/OrderDetailsPage.tsx";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../store/Store.ts";
 import {logOutUser} from "../../reducers/UserSlice.ts";
+import SupplierPage from "../../pages/SupplierPage.tsx";
 
 const drawerWidth = 230;
 
@@ -119,14 +120,14 @@ export default function HoverableSidebar() {
                             { text: 'Customers', icon: <GroupIcon />, to: '/customer' }, // Group Icon (Customer Management)
                             { text: 'Place Order', icon: <ShoppingCartIcon />, to: '/placeOrder' }, // Shopping Cart Icon for Orders
                             { text: 'Order Details', icon: <ReceiptLongIcon />, to: '/orderDetails' }, // Receipt Icon for Order Details
-                            /*{ text: 'Payment', icon: <PaymentIcon />, to: '/payment' }, // Payment Icon for Transactions*/
+                            { text: 'Suppliers', icon: <LocalShippingIcon />, to: '/supplier' }, // Payment Icon for Transactions
                             { text: 'Log Out', icon: <ExitToAppIcon />, to: '/login' }, // Log Out Icon
                         ].map((item) => (
                             <Tooltip title={item.text} placement="right" key={item.text}>
                                 <ListItem
                                     disablePadding
                                     sx={{
-                                        marginBottom: '16px', // Add vertical margin between list items
+                                        marginBottom: '4.5px', // Add vertical margin between list items
                                         border: '2px solid #674b50', // Add border
                                     }}
                                 >
@@ -204,8 +205,8 @@ export default function HoverableSidebar() {
                                     return 'Orders Management';
                                 case '/orderDetails':
                                     return 'Order Details';
-                                /*case '/payment':
-                                    return 'Payments';*/
+                                case '/supplier':
+                                    return 'Supplier Management';
                                 case '/logout':
                                     return 'Logout';
                                 default:
@@ -223,7 +224,7 @@ export default function HoverableSidebar() {
                         <Route path="/customer" element={<CustomerPage />} />
                         <Route path="/placeOrder" element={<PlaceOrderPage />} />
                         <Route path="/orderDetails" element={<OrderDetailsPage />} />
-                        {/*<Route path="/payment" element={<FlowerPage />} />*/}
+                        <Route path="/supplier" element={<SupplierPage />} />
                     </Routes>
                 </Box>
 
