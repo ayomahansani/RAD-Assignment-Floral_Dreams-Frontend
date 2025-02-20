@@ -2,11 +2,13 @@ import { useSelector } from "react-redux";
 import {Flower} from "../../models/flower.ts";
 import {Customer} from "../../models/customer.ts";
 import {Order} from "../../models/order.ts";
+import {Supplier} from "../../models/supplier.ts";
 
 interface RootState {
     flower: Flower[]; // Adjust type based on your Flower model
     customer: Customer[]; // Adjust type based on your Customer model
     order: Order[];
+    supplier: Supplier[];
 }
 
 const DashboardCardsComponent = () => {
@@ -14,6 +16,7 @@ const DashboardCardsComponent = () => {
     const flowers = useSelector((state: RootState) => state.flower); // Get flowers from Redux store
     const customers = useSelector((state: RootState) => state.customer); // Get customers from Redux store
     const orders = useSelector((state: RootState) => state.order); // Get orders from Redux store
+    const suppliers = useSelector((store: RootState) => store.supplier);
 
     const cards = [
         {
@@ -29,12 +32,17 @@ const DashboardCardsComponent = () => {
         {
             title: "Orders",
             count: orders.length,
-            image: "/order.jpg", // Replace with the actual image path
+            image: "/order-card.jpg", // Replace with the actual image path
+        },
+        {
+            title: "Suppliers",
+            count: suppliers.length,
+            image: "/supplier-card.jpg", // Replace with the actual image path
         },
     ];
 
     return (
-        <div className="grid gap-6 mb-6 md:grid-cols-3">
+        <div className="grid gap-4 mb-6 md:grid-cols-4">
             {cards.map((card, index) => (
                 <div
                     key={index}
