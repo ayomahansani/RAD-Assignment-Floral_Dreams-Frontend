@@ -66,6 +66,7 @@ const DashboardCardsComponent = () => {
                     <div className="absolute inset-0 z-0 bg-[#432e32] opacity-0 hover:opacity-30 transition-opacity duration-300"></div>
                 </div>
             ))}
+
         </div>
     );
 };
