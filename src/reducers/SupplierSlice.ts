@@ -71,7 +71,7 @@ const supplierSlice = createSlice({
         builder
 
             // save supplier
-            .addCase(saveSupplier.pending, (state) => {
+            .addCase(saveSupplier.pending, () => {
                 console.log("Pending saving supplier..."); // Proper logging
             })
             .addCase(saveSupplier.fulfilled, (state, action) => {
@@ -82,12 +82,12 @@ const supplierSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(saveSupplier.rejected, (state, action) => {
+            .addCase(saveSupplier.rejected, (_, action) => {
                 console.error("Failed to save supplier:", action.payload);
             })
 
             // get all suppliers
-            .addCase(viewSuppliers.pending, (state) => {
+            .addCase(viewSuppliers.pending, () => {
                 console.log("Pending viewing suppliers..."); // Proper logging
             })
             .addCase(viewSuppliers.fulfilled, (state, action) => {
@@ -99,12 +99,12 @@ const supplierSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(viewSuppliers.rejected, (state, action) => {
+            .addCase(viewSuppliers.rejected, (_, action) => {
                 console.error("Failed to get suppliers:", action.payload);
             })
 
             // update supplier
-            .addCase(updateSupplier.pending, (state) => {
+            .addCase(updateSupplier.pending, () => {
                 console.log("Pending updating supplier..."); // Proper logging
             })
             .addCase(updateSupplier.fulfilled, (state, action) => {
@@ -120,12 +120,12 @@ const supplierSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(updateSupplier.rejected, (state, action) => {
+            .addCase(updateSupplier.rejected, (_, action) => {
                 console.error("Failed to update v:", action.payload);
             })
 
             // delete supplier
-            .addCase(deleteSupplier.pending, (state) => {
+            .addCase(deleteSupplier.pending, () => {
                 console.log("Pending deleting supplier..."); // Proper logging
             })
             .addCase(deleteSupplier.fulfilled, (state, action) => {
@@ -138,7 +138,7 @@ const supplierSlice = createSlice({
                     console.warn("Supplier not found in state during deletion.");
                 }
             })
-            .addCase(deleteSupplier.rejected, (state, action) => {
+            .addCase(deleteSupplier.rejected, (_, action) => {
                 console.error("Failed to delete supplier:", action.payload);
             });
     }

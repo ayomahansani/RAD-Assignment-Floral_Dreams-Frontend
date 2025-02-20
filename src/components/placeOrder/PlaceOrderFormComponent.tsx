@@ -46,7 +46,6 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
     const [totalAmount, setTotalAmount] = useState<number | undefined>();
     const [discount, setDiscount] = useState("");
     const [qty, setQty] = useState<number | undefined>();
-    const [total, setTotal] = useState<number | undefined>(0);
 
     // Calculate the computed subtotal by adding additional charges to the table total
     const computedSubtotal = subtotal + (wrappingCharges || 0) + (decorationCharges || 0);
@@ -173,7 +172,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
         }
 
         const totalAmount = unitPrice * qty;
-        setTotal(totalAmount);
+        setTotalAmount(totalAmount);
 
         const newItem = new CartItems(
             itemCode!,
@@ -256,7 +255,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
         setBalance(undefined);
         setTotalAmount(undefined);
         setDiscount("");
-        setTotal(0);
+        setTotalAmount(0);
     };
 
     return (
@@ -524,7 +523,7 @@ const PlaceOrderFormComponent = ({onAddItem, subtotal, cartItems, setCartItems,}
 
                     {/* Place Order Buttons */}
                     <div className="col-span-2 flex gap-2">
-                        {/* Input 6 */}
+                        {/* Total amount */}
                         <input
                             type="text"
                             className="w-full p-1 font-extrabold text-blue-800 border border-[#432e32] rounded bg-gray-100 focus:outline-none shadow-md shadow-[#7e6868]"

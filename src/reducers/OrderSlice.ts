@@ -41,7 +41,7 @@ const orderSlice = createSlice({
         builder
 
             // save order
-            .addCase(saveOrder.pending, (state) => {
+            .addCase(saveOrder.pending, () => {
                 console.log("Pending saving order..."); // Proper logging
             })
             .addCase(saveOrder.fulfilled, (state, action) => {
@@ -52,12 +52,12 @@ const orderSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(saveOrder.rejected, (state, action) => {
+            .addCase(saveOrder.rejected, (_, action) => {
                 console.error("Failed to save order:", action.payload);
             })
 
             // get all orders
-            .addCase(viewOrders.pending, (state) => {
+            .addCase(viewOrders.pending, () => {
                 console.log("Pending viewing orders..."); // Proper logging
             })
             .addCase(viewOrders.fulfilled, (state, action) => {
@@ -69,7 +69,7 @@ const orderSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(viewOrders.rejected, (state, action) => {
+            .addCase(viewOrders.rejected, (_, action) => {
                 console.error("Failed to get orders:", action.payload);
             });
     }

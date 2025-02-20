@@ -71,7 +71,7 @@ const customerSlice = createSlice({
         builder
 
             // save customer
-            .addCase(saveCustomer.pending, (state) => {
+            .addCase(saveCustomer.pending, () => {
                 console.log("Pending saving customer..."); // Proper logging
             })
             .addCase(saveCustomer.fulfilled, (state, action) => {
@@ -82,15 +82,15 @@ const customerSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(saveCustomer.rejected, (state, action) => {
+            .addCase(saveCustomer.rejected, (_, action) => {
                 console.error("Failed to save customer:", action.payload);
             })
 
             // get all customers
-            .addCase(viewCustomers.pending, (state) => {
+            .addCase(viewCustomers.pending, () => {
                 console.log("Pending viewing customers..."); // Proper logging
             })
-            .addCase(viewCustomers.fulfilled, (state, action) => {
+            .addCase(viewCustomers.fulfilled, (_, action) => {
                 if (action.payload) {
                     console.log("Fetched customers:", action.payload);
                     return action.payload;
@@ -98,12 +98,12 @@ const customerSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(viewCustomers.rejected, (state, action) => {
+            .addCase(viewCustomers.rejected, (_, action) => {
                 console.error("Failed to get customers:", action.payload);
             })
 
             // update customer
-            .addCase(updateCustomer.pending, (state) => {
+            .addCase(updateCustomer.pending, () => {
                 console.log("Pending updating customer..."); // Proper logging
             })
             .addCase(updateCustomer.fulfilled, (state, action) => {
@@ -119,12 +119,12 @@ const customerSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(updateCustomer.rejected, (state, action) => {
+            .addCase(updateCustomer.rejected, (_, action) => {
                 console.error("Failed to update customer:", action.payload);
             })
 
             // delete customer
-            .addCase(deleteCustomer.pending, (state) => {
+            .addCase(deleteCustomer.pending, () => {
                 console.log("Pending deleting customer..."); // Proper logging
             })
             .addCase(deleteCustomer.fulfilled, (state, action) => {
@@ -137,7 +137,7 @@ const customerSlice = createSlice({
                     console.warn("Customer not found in state during deletion.");
                 }
             })
-            .addCase(deleteCustomer.rejected, (state, action) => {
+            .addCase(deleteCustomer.rejected, (_, action) => {
                 console.error("Failed to delete customer:", action.payload);
             });
     }

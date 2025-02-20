@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {clearError, loginUser} from "../../reducers/UserSlice.ts";
-import {AppDispatch} from "../../store/Store.ts";
+import {AppDispatch, RootState} from "../../store/Store.ts";
 import {viewFlowers} from "../../reducers/FlowerSlice.ts";
 import {viewCustomers} from "../../reducers/CustomerSlice.ts";
 import {viewOrders} from "../../reducers/OrderSlice.ts";
+import {viewSuppliers} from "../../reducers/SupplierSlice.ts";
 
 function LoginFormComponent() {
 
@@ -14,7 +15,7 @@ function LoginFormComponent() {
     const navigate = useNavigate();
 
 
-    const { isAuthenticated, error } = useSelector((state) => state.user);
+    const { isAuthenticated, error } = useSelector((state: RootState) => state.user);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -38,6 +39,7 @@ function LoginFormComponent() {
             dispatch(viewFlowers());
             dispatch(viewCustomers());
             dispatch(viewOrders());
+            dispatch(viewSuppliers());
             toast.success("Login successful!", { position: "bottom-right", autoClose: 2000 });
             navigate("/");
         }

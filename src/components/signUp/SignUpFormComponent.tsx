@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {clearError, registerUser} from "../../reducers/UserSlice.ts";
-import {AppDispatch} from "../../store/Store.ts";
+import {AppDispatch, RootState} from "../../store/Store.ts";
 import {User} from "../../models/user.ts";
 import {viewFlowers} from "../../reducers/FlowerSlice.ts";
 import {viewCustomers} from "../../reducers/CustomerSlice.ts";
 import {viewOrders} from "../../reducers/OrderSlice.ts";
+import {viewSuppliers} from "../../reducers/SupplierSlice.ts";
 
 function SignUpFormComponent() {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    const { isAuthenticated, error } = useSelector((state) => state.user);
+    const { isAuthenticated, error } = useSelector((state: RootState) => state.user);
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -39,6 +40,7 @@ function SignUpFormComponent() {
             dispatch(viewFlowers());
             dispatch(viewCustomers());
             dispatch(viewOrders());
+            dispatch(viewSuppliers());
             toast.success("Sign-up successful!", { position: "bottom-right", autoClose: 2000 });
             navigate("/");
         }

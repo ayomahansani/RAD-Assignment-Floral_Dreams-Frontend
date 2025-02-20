@@ -99,7 +99,7 @@ const flowerSlice = createSlice({
         builder
 
             // save flower
-            .addCase(saveFlower.pending, (state) => {
+            .addCase(saveFlower.pending, () => {
                 console.log("Pending saving flower..."); // Proper logging
             })
             .addCase(saveFlower.fulfilled, (state, action) => {
@@ -110,15 +110,15 @@ const flowerSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(saveFlower.rejected, (state, action) => {
+            .addCase(saveFlower.rejected, (_, action) => {
                 console.error("Failed to save flower:", action.payload);
             })
 
             // get all flowers
-            .addCase(viewFlowers.pending, (state) => {
+            .addCase(viewFlowers.pending, () => {
                 console.log("Pending viewing flowers..."); // Proper logging
             })
-            .addCase(viewFlowers.fulfilled, (state, action) => {
+            .addCase(viewFlowers.fulfilled, (_, action) => {
                 if (action.payload) {
                     console.log("Fetched flowers:", action.payload);
                     return action.payload;
@@ -126,12 +126,12 @@ const flowerSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(viewFlowers.rejected, (state, action) => {
+            .addCase(viewFlowers.rejected, (_, action) => {
                 console.error("Failed to get flowers:", action.payload);
             })
 
             // update flowers
-            .addCase(updateFlower.pending, (state) => {
+            .addCase(updateFlower.pending, () => {
                 console.log("Pending updating flower..."); // Proper logging
             })
             .addCase(updateFlower.fulfilled, (state, action) => {
@@ -147,12 +147,12 @@ const flowerSlice = createSlice({
                     console.error("Fulfilled but no data returned");
                 }
             })
-            .addCase(updateFlower.rejected, (state, action) => {
+            .addCase(updateFlower.rejected, (_, action) => {
                 console.error("Failed to update flower:", action.payload);
             })
 
             // delete flowers
-            .addCase(deleteFlower.pending, (state) => {
+            .addCase(deleteFlower.pending, () => {
                 console.log("Pending deleting flower..."); // Proper logging
             })
             .addCase(deleteFlower.fulfilled, (state, action) => {
@@ -165,7 +165,7 @@ const flowerSlice = createSlice({
                     console.warn("Flower not found in state during deletion.");
                 }
             })
-            .addCase(deleteFlower.rejected, (state, action) => {
+            .addCase(deleteFlower.rejected, (_, action) => {
                 console.error("Failed to delete flower:", action.payload);
             });
     }

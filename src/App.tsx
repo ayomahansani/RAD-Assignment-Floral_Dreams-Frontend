@@ -1,14 +1,15 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux"; // ✅ Use Redux state
+import { useSelector } from "react-redux";
 import RootLayout from "./components/sidebar/RootLayout";
 import { ToastContainer } from "react-toastify";
 import LoginFormComponent from "./components/login/LoginFormComponent.tsx";
 import SignUpFormComponent from "./components/signUp/SignUpFormComponent.tsx";
+import {RootState} from "./store/Store.ts";
 
 function App() {
 
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated); // Get from Redux
+    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated); // Get from Redux
 
     console.log("App Component - isAuthenticated:", isAuthenticated);
 

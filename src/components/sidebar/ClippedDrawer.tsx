@@ -16,10 +16,11 @@ import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+/*import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';*/
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import SpaIcon from '@mui/icons-material/Spa';
 
 import DashboardPage from '../../pages/DashboardPage.tsx';
 import FlowerPage from "../../pages/FlowerPage.tsx";
@@ -118,8 +119,8 @@ export default function HoverableSidebar() {
                             { text: 'Dashboard', icon: <DashboardIcon />, to: '/' }, // DashboardPage Icon
                             { text: 'Flowers', icon: <LocalFloristIcon />, to: '/flower' }, // Flower Icon
                             { text: 'Customers', icon: <GroupIcon />, to: '/customer' }, // Group Icon (Customer Management)
-                            { text: 'Place Order', icon: <ShoppingCartIcon />, to: '/placeOrder' }, // Shopping Cart Icon for Orders
-                            { text: 'Order Details', icon: <ReceiptLongIcon />, to: '/orderDetails' }, // Receipt Icon for Order Details
+                            { text: 'Flower Bouquet', icon: <SpaIcon />, to: '/placeOrder' }, // Shopping Cart Icon for Orders
+                            { text: 'Bouquet Info', icon: <ReceiptLongIcon />, to: '/orderDetails' }, // Receipt Icon for Order Details
                             { text: 'Suppliers', icon: <LocalShippingIcon />, to: '/supplier' }, // Payment Icon for Transactions
                             { text: 'Log Out', icon: <ExitToAppIcon />, to: '/login' }, // Log Out Icon
                         ].map((item) => (
