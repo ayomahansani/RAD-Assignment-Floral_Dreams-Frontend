@@ -44,7 +44,7 @@ Floral Dreams is a comprehensive flower management system that simplifies and st
 ### Frontend
 1. Clone the Frontend Repository:
     ```bash
-    git clone https://github.com/ayomahansani/AAD-Crop_Monitoring_System_Backend_SpringBoot.git
+    git clone https://github.com/ayomahansani/RAD-Assignment-Floral_Dreams-Frontend.git
     cd floral-dreams-frontend
     ```
 2. Install Dependencies:
@@ -63,7 +63,7 @@ Floral Dreams is a comprehensive flower management system that simplifies and st
 ### Backend
 1. Clone the Backend Repository:
     ```bash
-    git clone https://github.com/ayomahansani/AAD-Crop_Monitoring_System_Backend_SpringBoot.git
+    git clone https://github.com/ayomahansani/RAD-Assignment-Floral_Dreams-Backend.git
     cd floral-dreams-backend
     ```
 2. Install Dependencies:
